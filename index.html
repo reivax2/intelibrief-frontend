@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Actualidad de IA — IA sin filtros, cada semana</title>
+<title>NoticiasIA — IA sin filtros, cada semana</title>
 <meta name="description" content="Lo que pasa en inteligencia artificial esta semana, explicado en 5 minutos. Sin jerga, sin hype. Análisis honesto para personas ocupadas.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -28,6 +28,20 @@
 }
 html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;font-size:15px}
+
+/* TICKER */
+.ticker-wrap{background:var(--ink);color:#fff;padding:8px 0;overflow:hidden;white-space:nowrap}
+.ticker-content{display:inline-block;animation:ticker 20s linear infinite}
+.ticker-content:hover{animation-play-state:paused}
+@keyframes ticker{
+  0%{transform:translateX(100vw)}
+  70%{transform:translateX(-100%)}
+  71%{transform:translateX(-100%)}
+  85%{transform:translateX(-100%)}
+  100%{transform:translateX(100vw)}
+}
+.ticker-text{font-size:13px;font-weight:500;letter-spacing:0.03em;padding:0 40px}
+.ticker-text span{color:var(--accent);margin-right:8px}
 
 /* TOPBAR */
 .topbar{background:var(--accent);color:#fff;text-align:center;padding:10px 24px;font-size:13px;font-weight:500;letter-spacing:0.01em}
@@ -83,7 +97,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:16px 3
 .art-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px;line-height:1.35}
 .art-excerpt{font-size:13px;color:var(--ink3);line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .art-meta{font-size:11px;color:var(--ink3);margin-top:6px}
-.art-side{flex-shrink:0;text-align:right;font-size:11px;color:var(--ink3);padding-top:4px}
 
 /* READER */
 .reader-wrap{max-width:680px;margin:0 auto;padding:0 32px 40px;display:none}
@@ -159,13 +172,20 @@ footer{border-top:1px solid var(--border);padding:24px 32px;display:flex;align-i
 </head>
 <body>
 
-<div class="success-bar" id="success-bar">✓ ¡Bienvenido a Actualidad de IA! Revisa tu email para activar tu acceso.</div>
+<div class="success-bar" id="success-bar">✓ ¡Bienvenido a NoticiasIA! Revisa tu email para activar tu acceso.</div>
+
+<!-- TICKER DE NOTICIAS -->
+<div class="ticker-wrap">
+  <div class="ticker-content">
+    <span class="ticker-text"><span>⚡</span>Actualización de noticias de IA al momento — Todo lo que necesitas saber sobre inteligencia artificial, explicado sin tecnicismos, cada 48 horas</span>
+  </div>
+</div>
 
 <div class="topbar">🎉 Primera semana gratis — sin tarjeta · <a onclick="showPaywall()">Empieza ahora</a></div>
 
 <nav>
   <div class="logo">
-    <span class="logo-word">Actualidad de IA</span>
+    <span class="logo-word">NoticiasIA</span>
     <div class="logo-dot"></div>
   </div>
   <div class="nav-right">
@@ -213,7 +233,7 @@ footer{border-top:1px solid var(--border);padding:24px 32px;display:flex;align-i
 <div class="paywall-wrap" id="paywall">
   <div class="paywall-card">
     <div class="paywall-icon">📬</div>
-    <h2>Accede a todo Actualidad de IA</h2>
+    <h2>Accede a todo NoticiasIA</h2>
     <p>Análisis de IA que realmente importan, dos veces por semana. Directo al grano, sin ruido.</p>
     <div class="plans">
       <div class="plan">
@@ -298,10 +318,10 @@ footer{border-top:1px solid var(--border);padding:24px 32px;display:flex;align-i
   </div>
 </div>
 
-<!-- POR QUÉ Actualidad de IA -->
+<!-- POR QUÉ NOTICIASIA -->
 <div class="why">
   <div class="why-inner">
-    <h2>Por qué Actualidad de IA</h2>
+    <h2>Por qué NoticiasIA</h2>
     <p class="why-sub">Lo que no encontrarás en los medios generalistas ni en los blogs técnicos.</p>
     <div class="why-grid">
       <div class="why-item">
@@ -358,13 +378,13 @@ footer{border-top:1px solid var(--border);padding:24px 32px;display:flex;align-i
 </div>
 
 <footer>
-  <span>© 2025 Actualidad de IA</span>
+  <span>© 2025 NoticiasIA</span>
   <span>Privacidad · Términos · Contacto</span>
 </footer>
 
 <script>
 const STRIPE_KEY='pk_live_51TkUIQA25LaZKjnKrdaB5JdgJ3MKsSbHiHKLxOyiZM3c8Jmgx3mLt84MPrLfeUfemVxY1Q6swOJjb3QBSWxktyWi00fJK06Pq0';
-const API_URL='https://Actualidad de IA-backend.onrender.com';
+const API_URL='https://intelibrief-backend.onrender.com';
 const stripe=Stripe(STRIPE_KEY);
 
 const ARTICLES=[
