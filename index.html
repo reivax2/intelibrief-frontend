@@ -3,415 +3,445 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>InteliBrief — IA explicada cada semana</title>
-<meta name="description" content="Análisis, noticias y herramientas de inteligencia artificial actualizadas automáticamente. Lo que necesitas saber, sin tecnicismos.">
+<title>InteliBrief — IA sin filtros, cada semana</title>
+<meta name="description" content="Lo que pasa en inteligencia artificial esta semana, explicado en 5 minutos. Sin jerga, sin hype. Análisis honesto para personas ocupadas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <script src="https://js.stripe.com/v3/"></script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --blue: #185FA5;
-    --blue-light: #E6F1FB;
-    --green-light: #EAF3DE;
-    --green-dark: #27500A;
-    --gray: #f7f7f5;
-    --border: rgba(0,0,0,0.1);
-    --text: #1a1a1a;
-    --muted: #6b6b6b;
-    --radius: 10px;
-  }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text); background: #fff; line-height: 1.6; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0f0f0f;
+  --ink2:#3a3a3a;
+  --ink3:#6b6b6b;
+  --paper:#fafaf8;
+  --paper2:#f2f2ee;
+  --paper3:#e8e8e2;
+  --accent:#d4500a;
+  --accent-light:#fdf1ea;
+  --blue:#1a5fa8;
+  --blue-light:#eaf1fb;
+  --green:#1a6b3a;
+  --green-light:#eaf5ef;
+  --border:rgba(0,0,0,0.09);
+  --r:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;font-size:15px}
 
-  /* NAV */
-  nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); z-index: 100; }
-  .logo { font-size: 18px; font-weight: 600; letter-spacing: -0.03em; }
-  .logo span { color: var(--blue); }
-  .nav-right { display: flex; align-items: center; gap: 12px; }
-  .pill-subs { background: #FAEEDA; color: #633806; font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 99px; }
-  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; border: none; font-family: inherit; transition: opacity 0.15s, transform 0.1s; }
-  .btn:active { transform: scale(0.98); }
-  .btn-primary { background: var(--blue); color: #fff; }
-  .btn-primary:hover { opacity: 0.88; }
-  .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
-  .btn-outline:hover { background: var(--gray); }
-  .btn-sm { padding: 6px 14px; font-size: 13px; }
+/* TOPBAR */
+.topbar{background:var(--accent);color:#fff;text-align:center;padding:10px 24px;font-size:13px;font-weight:500;letter-spacing:0.01em}
+.topbar a{color:#fff;text-decoration:underline;cursor:pointer}
 
-  /* HERO */
-  .hero { text-align: center; padding: 64px 24px 48px; max-width: 640px; margin: 0 auto; }
-  .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--blue-light); color: #0C447C; font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 99px; margin-bottom: 20px; }
-  .hero h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 700; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 16px; }
-  .hero p { font-size: 16px; color: var(--muted); max-width: 420px; margin: 0 auto 28px; }
-  .hero-cta { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
-  .price-note { font-size: 13px; color: var(--muted); margin-top: 12px; }
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--border);background:rgba(250,250,248,0.96);backdrop-filter:blur(8px);position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:baseline;gap:2px}
+.logo-word{font-family:'Instrument Serif',serif;font-size:20px;color:var(--ink)}
+.logo-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;margin:0 1px 2px}
+.nav-right{display:flex;align-items:center;gap:10px}
+.badge-new{background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;letter-spacing:0.03em}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all 0.15s;letter-spacing:0.01em}
+.btn-ghost{background:transparent;color:var(--ink2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--paper2)}
+.btn-cta{background:var(--ink);color:#fff}
+.btn-cta:hover{background:#2a2a2a;transform:translateY(-1px)}
+.btn-accent{background:var(--accent);color:#fff}
+.btn-accent:hover{opacity:0.9;transform:translateY(-1px)}
 
-  /* STATS */
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 560px; margin: 0 auto 56px; padding: 0 24px; }
-  .stat { background: var(--gray); border-radius: var(--radius); padding: 16px; text-align: center; }
-  .stat-val { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
-  .stat-lbl { font-size: 12px; color: var(--muted); margin-top: 2px; }
+/* HERO */
+.hero{max-width:780px;margin:0 auto;padding:72px 32px 56px;text-align:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:24px}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:32px;height:1px;background:var(--paper3)}
+.hero h1{font-family:'Instrument Serif',serif;font-size:clamp(36px,6vw,58px);line-height:1.1;letter-spacing:-0.02em;color:var(--ink);margin-bottom:20px}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:17px;color:var(--ink2);max-width:480px;margin:0 auto 32px;line-height:1.65}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.hero-fine{font-size:12px;color:var(--ink3)}
+.hero-fine span{margin:0 8px}
 
-  /* ARTICLES */
-  .section { max-width: 720px; margin: 0 auto; padding: 0 24px 56px; }
-  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-  .section-title { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
-  .articles { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-  .article-item { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 14px; cursor: pointer; transition: background 0.1s; }
-  .article-item:last-child { border-bottom: none; }
-  .article-item:hover { background: var(--gray); }
-  .article-item.locked { cursor: pointer; }
-  .article-content { flex: 1; min-width: 0; }
-  .article-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; line-height: 1.35; }
-  .article-excerpt { font-size: 13px; color: var(--muted); line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .article-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
-  .tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; }
-  .tag-free { background: var(--green-light); color: var(--green-dark); }
-  .tag-pro { background: var(--blue-light); color: #0C447C; }
-  .time { font-size: 11px; color: var(--muted); }
-  .lock-icon { font-size: 12px; margin-right: 4px; }
+/* TRUST BAR */
+.trust{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;background:var(--paper)}
+.trust-item{display:flex;flex-direction:column;align-items:center;gap:3px}
+.trust-num{font-family:'Instrument Serif',serif;font-size:26px;color:var(--ink);line-height:1}
+.trust-lbl{font-size:11px;color:var(--ink3);font-weight:500;text-transform:uppercase;letter-spacing:0.06em}
+.trust-divider{width:1px;height:40px;background:var(--border)}
 
-  /* READER */
-  .reader { max-width: 680px; margin: 0 auto 40px; padding: 0 24px; display: none; }
-  .reader-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
-  .reader-ai-badge { display: inline-flex; align-items: center; gap: 6px; background: #EEEDFE; color: #3C3489; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 99px; margin-bottom: 14px; }
-  .reader-title { font-size: 20px; font-weight: 700; margin-bottom: 16px; line-height: 1.3; letter-spacing: -0.02em; }
-  .reader-body { font-size: 15px; line-height: 1.8; color: #2a2a2a; white-space: pre-wrap; }
-  .reader-actions { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
-  .spinner { width: 12px; height: 12px; border: 2px solid #AFA9EC; border-top-color: #534AB7; border-radius: 50%; animation: spin 0.7s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+/* SAMPLE ISSUE */
+.sample-section{max-width:780px;margin:0 auto;padding:56px 32px}
+.section-label{font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.articles{display:flex;flex-direction:column;gap:1px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--paper3)}
+.art{background:var(--paper);padding:20px 24px;display:flex;gap:20px;align-items:flex-start;cursor:pointer;transition:background 0.1s;border-bottom:1px solid var(--border)}
+.art:last-child{border-bottom:none}
+.art:hover{background:var(--paper2)}
+.art.locked{opacity:0.6;cursor:default}
+.art-num{font-family:'Instrument Serif',serif;font-size:28px;color:var(--paper3);line-height:1;flex-shrink:0;margin-top:2px;user-select:none}
+.art-body{flex:1;min-width:0}
+.art-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:2px 8px;border-radius:4px;margin-bottom:8px}
+.tag-free{background:var(--green-light);color:var(--green)}
+.tag-pro{background:var(--blue-light);color:var(--blue)}
+.art-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px;line-height:1.35}
+.art-excerpt{font-size:13px;color:var(--ink3);line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.art-meta{font-size:11px;color:var(--ink3);margin-top:6px}
+.art-side{flex-shrink:0;text-align:right;font-size:11px;color:var(--ink3);padding-top:4px}
 
-  /* PAYWALL */
-  .paywall { max-width: 560px; margin: 0 auto 56px; padding: 0 24px; display: none; }
-  .paywall-card { border: 1px solid var(--border); border-radius: 14px; padding: 32px; text-align: center; }
-  .paywall-icon { font-size: 32px; margin-bottom: 12px; }
-  .paywall-card h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-  .paywall-card p { font-size: 14px; color: var(--muted); margin-bottom: 24px; max-width: 360px; margin-left: auto; margin-right: auto; }
-  .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-  .plan { border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; text-align: left; }
-  .plan.featured { border: 2px solid var(--blue); }
-  .plan-badge { font-size: 11px; font-weight: 600; color: var(--blue); margin-bottom: 6px; }
-  .plan-name { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
-  .plan-price { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 2px; }
-  .plan-price span { font-size: 14px; font-weight: 400; color: var(--muted); }
-  .plan-desc { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
-  .features { list-style: none; font-size: 13px; color: var(--muted); margin-bottom: 16px; display: flex; flex-direction: column; gap: 5px; }
-  .features li::before { content: "✓  "; color: #27500A; font-weight: 700; }
-  .stripe-note { font-size: 11px; color: var(--muted); }
+/* READER */
+.reader-wrap{max-width:680px;margin:0 auto;padding:0 32px 40px;display:none}
+.reader-card{border:1px solid var(--border);border-radius:12px;padding:28px;background:#fff}
+.reader-ai{display:inline-flex;align-items:center;gap:6px;background:#EEEDFE;color:#3C3489;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;margin-bottom:16px;letter-spacing:0.03em}
+.reader-title{font-family:'Instrument Serif',serif;font-size:22px;color:var(--ink);margin-bottom:16px;line-height:1.3}
+.reader-body{font-size:15px;line-height:1.8;color:var(--ink2);white-space:pre-wrap}
+.reader-actions{display:flex;gap:8px;margin-top:20px}
+.spin{width:12px;height:12px;border:2px solid #AFA9EC;border-top-color:#534AB7;border-radius:50%;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-  /* PRICING SECTION */
-  .pricing-section { background: var(--gray); padding: 56px 24px; text-align: center; }
-  .pricing-section h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 8px; }
-  .pricing-section p { color: var(--muted); margin-bottom: 32px; }
+/* PAYWALL */
+.paywall-wrap{max-width:560px;margin:0 auto;padding:0 32px 56px;display:none}
+.paywall-card{border:1px solid var(--border);border-radius:16px;padding:36px;text-align:center;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.06)}
+.paywall-icon{font-size:36px;margin-bottom:12px}
+.paywall-card h2{font-family:'Instrument Serif',serif;font-size:26px;color:var(--ink);margin-bottom:8px}
+.paywall-card p{font-size:14px;color:var(--ink3);margin-bottom:28px;line-height:1.6;max-width:360px;margin-left:auto;margin-right:auto}
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.plan{border:1.5px solid var(--border);border-radius:10px;padding:20px;text-align:left;background:var(--paper)}
+.plan.best{border-color:var(--ink);background:#fff;position:relative}
+.plan-best-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:10px;font-weight:700;padding:2px 12px;border-radius:99px;letter-spacing:0.05em;white-space:nowrap}
+.plan-name{font-size:12px;font-weight:600;color:var(--ink3);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em}
+.plan-price{font-family:'Instrument Serif',serif;font-size:30px;color:var(--ink);margin-bottom:4px;line-height:1}
+.plan-price sub{font-size:14px;font-family:'Inter',sans-serif;font-weight:400;color:var(--ink3)}
+.plan-desc{font-size:12px;color:var(--ink3);margin-bottom:14px;line-height:1.4}
+.plan-features{list-style:none;font-size:12px;color:var(--ink2);margin-bottom:16px;display:flex;flex-direction:column;gap:6px}
+.plan-features li{display:flex;align-items:center;gap:6px}
+.plan-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.paywall-fine{font-size:11px;color:var(--ink3)}
 
-  /* HOW IT WORKS */
-  .how { max-width: 680px; margin: 0 auto; padding: 56px 24px; }
-  .how h2 { font-size: 24px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.02em; }
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
-  .step { background: var(--gray); border-radius: var(--radius); padding: 20px; }
-  .step-num { font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-  .step h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
-  .step p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+/* WHY */
+.why{background:var(--paper2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:56px 32px}
+.why-inner{max-width:780px;margin:0 auto}
+.why h2{font-family:'Instrument Serif',serif;font-size:32px;color:var(--ink);margin-bottom:8px}
+.why-sub{font-size:15px;color:var(--ink3);margin-bottom:36px}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.why-item{background:var(--paper);border:1px solid var(--border);border-radius:10px;padding:20px}
+.why-icon{font-size:22px;margin-bottom:10px}
+.why-item h3{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.why-item p{font-size:13px;color:var(--ink3);line-height:1.55}
 
-  /* FOOTER */
-  footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; font-size: 13px; color: var(--muted); }
+/* TESTIMONIALS */
+.testimonials{max-width:780px;margin:0 auto;padding:56px 32px}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.testi{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px}
+.testi-stars{color:#f5a623;font-size:13px;margin-bottom:10px}
+.testi-text{font-size:13px;color:var(--ink2);line-height:1.6;margin-bottom:12px;font-style:italic}
+.testi-author{font-size:12px;font-weight:600;color:var(--ink3)}
 
-  /* SUCCESS */
-  .success-banner { background: var(--green-light); color: var(--green-dark); padding: 12px 24px; text-align: center; font-size: 14px; font-weight: 500; display: none; }
+/* CTA BOTTOM */
+.cta-bottom{background:var(--ink);color:#fff;padding:64px 32px;text-align:center}
+.cta-bottom h2{font-family:'Instrument Serif',serif;font-size:36px;margin-bottom:12px;line-height:1.2}
+.cta-bottom p{font-size:15px;color:rgba(255,255,255,0.65);margin-bottom:28px}
 
-  @media (max-width: 480px) {
-    .plans { grid-template-columns: 1fr; }
-    .stats { grid-template-columns: 1fr 1fr; }
-    .nav-right .pill-subs { display: none; }
-  }
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:24px 32px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--ink3);flex-wrap:wrap;gap:12px;background:var(--paper)}
+
+/* SUCCESS */
+.success-bar{background:var(--green-light);color:var(--green);padding:14px 32px;text-align:center;font-size:14px;font-weight:600;display:none;border-bottom:1px solid rgba(26,107,58,0.2)}
+
+@media(max-width:600px){
+  nav{padding:12px 16px}
+  .hero{padding:48px 16px 40px}
+  .trust{gap:20px;padding:16px}
+  .trust-divider{display:none}
+  .sample-section,.testimonials{padding:40px 16px}
+  .why{padding:40px 16px}
+  .plans{grid-template-columns:1fr}
+  .paywall-wrap,.reader-wrap{padding:0 16px 40px}
+  footer{flex-direction:column;text-align:center}
+}
 </style>
 </head>
 <body>
 
-<div class="success-banner" id="success-banner">
-  ✓ ¡Suscripción activada! Revisa tu email para confirmar. Bienvenido/a a InteliBrief.
-</div>
+<div class="success-bar" id="success-bar">✓ ¡Bienvenido a InteliBrief! Revisa tu email para activar tu acceso.</div>
+
+<div class="topbar">🎉 Primera semana gratis — sin tarjeta · <a onclick="showPaywall()">Empieza ahora</a></div>
 
 <nav>
-  <div class="logo">Inteli<span>Brief</span></div>
+  <div class="logo">
+    <span class="logo-word">InteliBrief</span>
+    <div class="logo-dot"></div>
+  </div>
   <div class="nav-right">
-    <span class="pill-subs">🔥 847 suscriptores</span>
-    <button class="btn btn-outline btn-sm" onclick="showPaywall()">Iniciar sesión</button>
-    <button class="btn btn-primary btn-sm" onclick="showPaywall()">Suscribirse</button>
+    <span class="badge-new">Nuevo cada 48h</span>
+    <button class="btn btn-ghost" onclick="showPaywall()">Entrar</button>
+    <button class="btn btn-cta" onclick="showPaywall()">Suscribirse</button>
   </div>
 </nav>
 
 <section class="hero">
-  <div class="hero-badge">⚡ Actualizado automáticamente cada 48h</div>
-  <h1>Inteligencia artificial explicada sin tecnicismos</h1>
-  <p>Análisis, herramientas y noticias de IA que realmente importan. Generado y curado automáticamente para que no te pierdas nada.</p>
-  <div class="hero-cta">
-    <button class="btn btn-primary" onclick="showPaywall()">Empezar gratis 14 días →</button>
-    <button class="btn btn-outline" onclick="document.querySelector('.section').scrollIntoView({behavior:'smooth'})">Ver contenido gratis</button>
+  <div class="hero-eyebrow">Inteligencia artificial · Sin tecnicismos</div>
+  <h1>Lo que pasa en IA<br>esta semana, en <em>5 minutos</em></h1>
+  <p class="hero-sub">Análisis honestos, herramientas útiles y noticias relevantes. Sin hype, sin jerga. Para personas que quieren estar al día sin perder el tiempo.</p>
+  <div class="hero-actions">
+    <button class="btn btn-accent" style="font-size:15px;padding:12px 28px" onclick="showPaywall()">Empezar gratis 7 días →</button>
+    <button class="btn btn-ghost" onclick="document.getElementById('articulos').scrollIntoView({behavior:'smooth'})">Ver un ejemplo</button>
   </div>
-  <p class="price-note">Desde 7€/mes · Cancela cuando quieras · Sin permanencia</p>
+  <p class="hero-fine">Desde 7€/mes<span>·</span>Cancela cuando quieras<span>·</span>Sin compromiso</p>
 </section>
 
-<div class="stats">
-  <div class="stat"><div class="stat-val">847</div><div class="stat-lbl">Suscriptores activos</div></div>
-  <div class="stat"><div class="stat-val">4.9★</div><div class="stat-lbl">Valoración</div></div>
-  <div class="stat"><div class="stat-val">128</div><div class="stat-lbl">Artículos publicados</div></div>
+<div class="trust">
+  <div class="trust-item"><div class="trust-num">2x</div><div class="trust-lbl">por semana</div></div>
+  <div class="trust-divider"></div>
+  <div class="trust-item"><div class="trust-num">5'</div><div class="trust-lbl">de lectura</div></div>
+  <div class="trust-divider"></div>
+  <div class="trust-item"><div class="trust-num">0</div><div class="trust-lbl">tecnicismos</div></div>
+  <div class="trust-divider"></div>
+  <div class="trust-item"><div class="trust-num">100%</div><div class="trust-lbl">independiente</div></div>
 </div>
 
-<!-- READER (se muestra al pulsar un artículo) -->
-<div class="reader" id="reader">
+<!-- READER -->
+<div class="reader-wrap" id="reader">
   <div class="reader-card">
-    <div class="reader-ai-badge">
-      <div class="spinner" id="reader-spinner"></div>
-      <span id="reader-badge-text">Generando con IA...</span>
-    </div>
+    <div class="reader-ai"><div class="spin" id="spin"></div><span id="ai-badge-text">Cargando artículo...</span></div>
     <h2 class="reader-title" id="reader-title"></h2>
     <div class="reader-body" id="reader-body"></div>
     <div class="reader-actions">
-      <button class="btn btn-outline btn-sm" onclick="regenerateArticle()">↻ Regenerar</button>
-      <button class="btn btn-outline btn-sm" onclick="closeReader()">✕ Cerrar</button>
+      <button class="btn btn-ghost" style="font-size:12px;padding:6px 14px" onclick="regenArticle()">↻ Regenerar</button>
+      <button class="btn btn-ghost" style="font-size:12px;padding:6px 14px" onclick="closeReader()">✕ Cerrar</button>
     </div>
   </div>
 </div>
 
 <!-- PAYWALL -->
-<div class="paywall" id="paywall">
+<div class="paywall-wrap" id="paywall">
   <div class="paywall-card">
-    <div class="paywall-icon">👑</div>
-    <h2>Contenido exclusivo para suscriptores</h2>
-    <p>Más de 800 personas ya reciben análisis de IA actualizados cada 48h directamente en su bandeja de entrada.</p>
+    <div class="paywall-icon">📬</div>
+    <h2>Accede a todo InteliBrief</h2>
+    <p>Análisis de IA que realmente importan, dos veces por semana. Directo al grano, sin ruido.</p>
     <div class="plans">
       <div class="plan">
         <div class="plan-name">Básico</div>
-        <div class="plan-price">7€<span>/mes</span></div>
+        <div class="plan-price">7€<sub>/mes</sub></div>
         <div class="plan-desc">Para mantenerse al día</div>
-        <ul class="features">
-          <li>2 artículos Pro por semana</li>
+        <ul class="plan-features">
+          <li>2 análisis Pro por semana</li>
+          <li>Archivo de 3 meses</li>
           <li>Newsletter semanal</li>
-          <li>Archivo 3 meses</li>
         </ul>
-        <button class="btn btn-outline" style="width:100%" onclick="checkout('price_1TkVBFA25LaZKjnKAJpPdZ8I')">Empezar</button>
+        <button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="checkout('price_1TkVBFA25LaZKjnKAJpPdZ8I')">Empezar gratis</button>
       </div>
-      <div class="plan featured">
-        <div class="plan-badge">⭐ Más popular</div>
+      <div class="plan best">
+        <div class="plan-best-badge">MÁS POPULAR</div>
         <div class="plan-name">Pro</div>
-        <div class="plan-price">12€<span>/mes</span></div>
+        <div class="plan-price">12€<sub>/mes</sub></div>
         <div class="plan-desc">Acceso total sin límites</div>
-        <ul class="features">
-          <li>Todos los artículos</li>
-          <li>Informes semanales</li>
+        <ul class="plan-features">
+          <li>Todo el contenido</li>
           <li>Archivo completo</li>
           <li>Acceso anticipado</li>
+          <li>Informes especiales</li>
         </ul>
-        <button class="btn btn-primary" style="width:100%" onclick="checkout('price_1TkVG1A25LaZKjnKz7ATpJDP')">Suscribirme →</button>
+        <button class="btn btn-accent" style="width:100%;justify-content:center" onclick="checkout('price_1TkVG1A25LaZKjnKz7ATpJDP')">Suscribirme →</button>
       </div>
     </div>
-    <p class="stripe-note">🔒 Pago seguro con Stripe · Cancela en cualquier momento · Sin permanencia</p>
-    <button class="btn btn-outline btn-sm" style="margin-top:12px" onclick="hidePaywall()">✕ Cerrar</button>
+    <p class="paywall-fine">🔒 Pago seguro · Cancela en cualquier momento · Sin permanencia</p>
+    <button class="btn btn-ghost" style="font-size:12px;padding:6px 14px;margin-top:12px" onclick="hidePaywall()">No ahora</button>
   </div>
 </div>
 
 <!-- ARTÍCULOS -->
-<div class="section">
-  <div class="section-header">
-    <span class="section-title">⚡ Últimas publicaciones</span>
-    <span style="font-size:12px; color:var(--muted)">Actualizado hace 2h</span>
-  </div>
-  <div class="articles" id="articles-container">
-    <!-- Los artículos se cargan desde la API o estáticos como fallback -->
+<div class="sample-section" id="articulos">
+  <div class="section-label">Últimas publicaciones</div>
+  <div class="articles">
+    <div class="art" onclick="openArticle(0)">
+      <div class="art-num">01</div>
+      <div class="art-body">
+        <div class="art-tag tag-free">✓ Gratis</div>
+        <div class="art-title">ChatGPT, Gemini o Claude: ¿cuál te conviene usar en 2025?</div>
+        <div class="art-excerpt">Comparativa honesta de los tres grandes. Sin publicidad, sin afiliados. Solo lo que necesitas saber para elegir.</div>
+        <div class="art-meta">Hace 1 hora · 4 min de lectura</div>
+      </div>
+    </div>
+    <div class="art" onclick="openArticle(1)">
+      <div class="art-num">02</div>
+      <div class="art-body">
+        <div class="art-tag tag-free">✓ Gratis</div>
+        <div class="art-title">5 tareas del trabajo que ya puedes automatizar con IA hoy mismo</div>
+        <div class="art-excerpt">Emails, resúmenes, informes, traducciones... herramientas concretas y gratuitas para cada caso.</div>
+        <div class="art-meta">Ayer · 5 min de lectura</div>
+      </div>
+    </div>
+    <div class="art locked" onclick="showPaywall()">
+      <div class="art-num">03</div>
+      <div class="art-body">
+        <div class="art-tag tag-pro">🔒 Pro</div>
+        <div class="art-title">El verdadero coste de usar IA en tu empresa: lo que nadie te dice</div>
+        <div class="art-excerpt">Licencias, privacidad de datos, dependencia de proveedores. Análisis completo para tomar decisiones informadas.</div>
+        <div class="art-meta">Hace 2 días · 6 min de lectura</div>
+      </div>
+    </div>
+    <div class="art locked" onclick="showPaywall()">
+      <div class="art-num">04</div>
+      <div class="art-body">
+        <div class="art-tag tag-pro">🔒 Pro</div>
+        <div class="art-title">Informe semanal: todo lo que movió la IA esta semana en 5 minutos</div>
+        <div class="art-excerpt">OpenAI, Google, Meta, Anthropic. Los movimientos que importan y lo que significan para ti.</div>
+        <div class="art-meta">Hace 3 días · 5 min de lectura</div>
+      </div>
+    </div>
+    <div class="art locked" onclick="showPaywall()">
+      <div class="art-num">05</div>
+      <div class="art-body">
+        <div class="art-tag tag-pro">🔒 Pro</div>
+        <div class="art-title">Prompt engineering para no técnicos: consigue el doble con la misma IA</div>
+        <div class="art-excerpt">Las técnicas que usan los expertos, explicadas sin jerga. Con ejemplos reales que puedes copiar.</div>
+        <div class="art-meta">Hace 4 días · 7 min de lectura</div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- CÓMO FUNCIONA -->
-<div class="how">
-  <h2>Cómo funciona InteliBrief</h2>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">Paso 1</div>
-      <h3>IA genera el contenido</h3>
-      <p>Cada 48h un script automático produce artículos sobre las tendencias más importantes en IA.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">Paso 2</div>
-      <h3>Se publica solo</h3>
-      <p>El contenido aparece en la web sin que tengas que hacer nada. Tú duermes, la web trabaja.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">Paso 3</div>
-      <h3>Los lectores se suscriben</h3>
-      <p>El contenido gratuito atrae visitas. El contenido Pro convierte visitas en suscriptores de pago.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">Paso 4</div>
-      <h3>Stripe te paga</h3>
-      <p>Cada mes Stripe transfiere los ingresos directamente a tu cuenta bancaria. Automático.</p>
+<!-- POR QUÉ INTELIBRIEF -->
+<div class="why">
+  <div class="why-inner">
+    <h2>Por qué InteliBrief</h2>
+    <p class="why-sub">Lo que no encontrarás en los medios generalistas ni en los blogs técnicos.</p>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon">🎯</div>
+        <h3>Solo lo que importa</h3>
+        <p>Filtramos el ruido. Cada pieza está seleccionada porque tiene impacto real en tu vida o trabajo.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🗣️</div>
+        <h3>Sin tecnicismos</h3>
+        <p>Explicamos conceptos complejos en lenguaje normal. Si no lo entiendes tú, lo reescribimos.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">⏱️</div>
+        <h3>Respeta tu tiempo</h3>
+        <p>Cada análisis está pensado para leerse en 5 minutos. Denso de información, ligero de palabrería.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🔍</div>
+        <h3>Independiente</h3>
+        <p>Sin anunciantes, sin afiliados, sin agendas. Solo nuestra opinión honesta sobre lo que cubrimos.</p>
+      </div>
     </div>
   </div>
+</div>
+
+<!-- TESTIMONIOS -->
+<div class="testimonials">
+  <div class="section-label">Lo que dicen los lectores</div>
+  <div class="testi-grid">
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Por fin una newsletter de IA que no necesito Google para entender. Directa y sin rodeos."</p>
+      <div class="testi-author">María G. · Profesora</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Me ahorra horas de leer Twitter y blogs. En 5 minutos sé todo lo relevante de la semana."</p>
+      <div class="testi-author">Carlos M. · Autónomo</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"El análisis de herramientas es increíblemente útil. Ya he cambiado mi flujo de trabajo gracias a varios artículos."</p>
+      <div class="testi-author">Laura P. · Diseñadora</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta-bottom">
+  <h2>La IA no espera.<br>Tú tampoco deberías.</h2>
+  <p>Primera semana gratis. Sin tarjeta. Sin compromiso.</p>
+  <button class="btn btn-accent" style="font-size:15px;padding:13px 32px" onclick="showPaywall()">Empezar ahora →</button>
 </div>
 
 <footer>
-  <p>© 2025 InteliBrief · <a href="#" style="color:inherit">Privacidad</a> · <a href="#" style="color:inherit">Términos</a> · Hecho con ❤️ y mucha IA</p>
+  <span>© 2025 InteliBrief</span>
+  <span>Privacidad · Términos · Contacto</span>
 </footer>
 
 <script>
-// =============================================
-// CONFIGURACIÓN — edita estos valores
-// =============================================
-const CONFIG = {
-  stripePublicKey: 'pk_live_51TkUIQA25LaZKjnKrdaB5JdgJ3MKsSbHiHKLxOyiZM3c8Jmgx3mLt84MPrLfeUfemVxY1Q6swOJjb3QBSWxktyWi00fJK06Pq0',
-  apiUrl: 'https://intelibrief-backend.onrender.com', // URL de tu backend en Railway
-  siteName: 'InteliBrief'
-};
+const STRIPE_KEY='pk_live_51TkUIQA25LaZKjnKrdaB5JdgJ3MKsSbHiHKLxOyiZM3c8Jmgx3mLt84MPrLfeUfemVxY1Q6swOJjb3QBSWxktyWi00fJK06Pq0';
+const API_URL='https://intelibrief-backend.onrender.com';
+const stripe=Stripe(STRIPE_KEY);
 
-// Artículos estáticos de fallback (mientras no tienes base de datos)
-const ARTICLES = [
+const ARTICLES=[
   {
-    id: 1,
-    title: 'GPT-5 ya está aquí: qué cambia para los usuarios de a pie',
-    excerpt: 'Análisis completo de las nuevas capacidades y cómo afectan a tu trabajo diario',
-    free: true,
-    date: 'Hace 2 horas',
-    prompt: 'Escribe un artículo informativo de 300 palabras en español sobre las novedades más importantes de los últimos modelos de lenguaje de IA en 2025 y cómo afectan al usuario medio no técnico. Incluye ejemplos prácticos. Tono claro y cercano. Sin asteriscos ni markdown, solo texto plano con párrafos.'
+    title:'ChatGPT, Gemini o Claude: ¿cuál te conviene usar en 2025?',
+    prompt:'Escribe un análisis periodístico de 350 palabras en español comparando ChatGPT, Gemini y Claude como asistentes de IA para uso cotidiano en 2025. Para cada uno: puntos fuertes, puntos débiles y para quién es ideal. Tono directo y honesto, sin publicidad. Sin asteriscos ni markdown, solo párrafos de texto plano.'
   },
   {
-    id: 2,
-    title: 'Las 7 herramientas de IA gratuitas que deberías conocer este mes',
-    excerpt: 'Selección curada de las mejores apps de IA disponibles ahora mismo sin coste',
-    free: true,
-    date: 'Ayer',
-    prompt: 'Escribe un artículo de 300 palabras en español listando 7 herramientas de inteligencia artificial gratuitas o freemium útiles para productividad personal y trabajo en 2025. Para cada una: nombre, para qué sirve y por qué es útil. Sin asteriscos ni markdown, solo texto plano con párrafos.'
-  },
-  {
-    id: 3,
-    title: '🔒 Guía: automatiza tu negocio con n8n + Claude en 2025',
-    excerpt: 'Paso a paso para montar flujos de trabajo que ahorran 10h semanales sin código',
-    free: false,
-    date: 'Hace 2 días',
-    prompt: ''
-  },
-  {
-    id: 4,
-    title: '🔒 Comparativa: los 5 mejores asistentes de IA en español (pruebas reales)',
-    excerpt: 'Probamos ChatGPT, Gemini, Claude, Copilot y Perplexity con las mismas preguntas',
-    free: false,
-    date: 'Hace 3 días',
-    prompt: ''
-  },
-  {
-    id: 5,
-    title: '🔒 Informe semanal: todo lo que pasó en IA esta semana',
-    excerpt: 'Google, Meta, OpenAI y Anthropic — resumen ejecutivo en 5 minutos',
-    free: false,
-    date: 'Hace 4 días',
-    prompt: ''
-  },
-  {
-    id: 6,
-    title: '🔒 Cómo usar la IA para ganar dinero extra desde casa (métodos reales)',
-    excerpt: 'Sin experiencia técnica: freelancing, automatización, creación de contenido',
-    free: false,
-    date: 'Hace 5 días',
-    prompt: ''
+    title:'5 tareas del trabajo que ya puedes automatizar con IA hoy mismo',
+    prompt:'Escribe un artículo práctico de 350 palabras en español sobre 5 tareas laborales cotidianas que se pueden automatizar con herramientas de IA gratuitas en 2025. Para cada tarea: qué herramienta usar y cómo. Tono práctico y directo. Sin asteriscos ni markdown, solo párrafos de texto plano.'
   }
 ];
 
-let currentArticleIdx = null;
-const stripe = Stripe(CONFIG.stripePublicKey);
+let currentIdx=null;
 
-// Renderizar artículos
-function renderArticles() {
-  const container = document.getElementById('articles-container');
-  container.innerHTML = ARTICLES.map((a, i) => `
-    <div class="article-item ${a.free ? '' : 'locked'}" onclick="${a.free ? `openArticle(${i})` : 'showPaywall()'}">
-      <div class="article-content">
-        <div class="article-title">${a.title}</div>
-        <div class="article-excerpt">${a.excerpt}</div>
-      </div>
-      <div class="article-meta">
-        <span class="time">${a.date}</span>
-        <span class="tag ${a.free ? 'tag-free' : 'tag-pro'}">${a.free ? 'Gratis' : 'Pro'}</span>
-      </div>
-    </div>
-  `).join('');
+function openArticle(idx){
+  currentIdx=idx;
+  const a=ARTICLES[idx];
+  const r=document.getElementById('reader');
+  document.getElementById('paywall').style.display='none';
+  r.style.display='block';
+  document.getElementById('reader-title').textContent=a.title;
+  document.getElementById('reader-body').textContent='';
+  document.getElementById('spin').style.display='inline-block';
+  document.getElementById('ai-badge-text').textContent='Generando con IA...';
+  r.scrollIntoView({behavior:'smooth',block:'start'});
+  fetchArticle(a.prompt);
 }
 
-// Abrir y generar artículo con IA
-async function openArticle(idx) {
-  currentArticleIdx = idx;
-  const article = ARTICLES[idx];
-  const reader = document.getElementById('reader');
-  const paywall = document.getElementById('paywall');
-  paywall.style.display = 'none';
-  reader.style.display = 'block';
-  document.getElementById('reader-title').textContent = article.title.replace('🔒 ', '');
-  document.getElementById('reader-body').textContent = '';
-  document.getElementById('reader-spinner').style.display = 'inline-block';
-  document.getElementById('reader-badge-text').textContent = 'Generando contenido con IA...';
-  reader.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: article.prompt }]
-      })
+async function fetchArticle(prompt){
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:prompt}]})
     });
-    const data = await res.json();
-    const text = data.content?.map(b => b.text || '').join('') || 'Error al generar el contenido.';
-    document.getElementById('reader-body').textContent = text;
-    document.getElementById('reader-spinner').style.display = 'none';
-    document.getElementById('reader-badge-text').textContent = '✓ Generado por IA · ' + new Date().toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'});
-  } catch (e) {
-    document.getElementById('reader-body').textContent = 'Error de conexión. Por favor inténtalo de nuevo.';
-    document.getElementById('reader-spinner').style.display = 'none';
-    document.getElementById('reader-badge-text').textContent = 'Error';
+    const d=await res.json();
+    const text=d.content?.map(b=>b.text||'').join('')||'Error al generar el contenido.';
+    document.getElementById('reader-body').textContent=text;
+    document.getElementById('spin').style.display='none';
+    document.getElementById('ai-badge-text').textContent='✓ Generado · '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+  }catch(e){
+    document.getElementById('reader-body').textContent='Error de conexión. Por favor inténtalo de nuevo.';
+    document.getElementById('spin').style.display='none';
+    document.getElementById('ai-badge-text').textContent='Error';
   }
 }
 
-function regenerateArticle() {
-  if (currentArticleIdx !== null) openArticle(currentArticleIdx);
-}
+function regenArticle(){if(currentIdx!==null)openArticle(currentIdx);}
+function closeReader(){document.getElementById('reader').style.display='none';}
 
-function closeReader() {
-  document.getElementById('reader').style.display = 'none';
+function showPaywall(){
+  document.getElementById('reader').style.display='none';
+  const pw=document.getElementById('paywall');
+  pw.style.display='block';
+  pw.scrollIntoView({behavior:'smooth',block:'start'});
 }
+function hidePaywall(){document.getElementById('paywall').style.display='none';}
 
-// Paywall
-function showPaywall() {
-  document.getElementById('reader').style.display = 'none';
-  const pw = document.getElementById('paywall');
-  pw.style.display = 'block';
-  pw.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function hidePaywall() {
-  document.getElementById('paywall').style.display = 'none';
-}
-
-// Stripe Checkout
-async function checkout(priceId) {
-  try {
-    // Llama a tu backend para crear una sesión de Stripe
-    const res = await fetch(CONFIG.apiUrl + '/create-checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ priceId })
+async function checkout(priceId){
+  try{
+    const res=await fetch(API_URL+'/create-checkout',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({priceId})
     });
-    const { sessionId } = await res.json();
-    await stripe.redirectToCheckout({ sessionId });
-  } catch (e) {
+    const {sessionId}=await res.json();
+    await stripe.redirectToCheckout({sessionId});
+  }catch(e){
     alert('Error al conectar con el sistema de pago. Por favor inténtalo de nuevo.');
   }
 }
 
-// Mostrar banner de éxito si viene de Stripe
-if (window.location.search.includes('success=true')) {
-  document.getElementById('success-banner').style.display = 'block';
-  window.scrollTo(0, 0);
+if(window.location.search.includes('success=true')){
+  document.getElementById('success-bar').style.display='block';
+  window.scrollTo(0,0);
 }
-
-// Init
-renderArticles();
 </script>
 </body>
 </html>
