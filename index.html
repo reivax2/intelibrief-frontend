@@ -318,6 +318,49 @@
             font-weight: 600;
         }
 
+        /* Modal para el contenido completo */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: var(--paper);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: var(--r);
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .close {
+            color: var(--ink3);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: var(--ink);
+        }
+
+        .modal-body {
+            margin-top: 20px;
+            line-height: 1.8;
+            color: var(--ink2);
+        }
+
         /* Sección de suscripción */
         .subscription-section {
             text-align: center;
@@ -436,6 +479,10 @@
                 width: 100% !important;
                 margin: 10px 0 !important;
             }
+            .modal-content {
+                width: 95% !important;
+                padding: 20px !important;
+            }
         }
     </style>
 </head>
@@ -445,6 +492,15 @@
         <div class="ticker-content">
             <span class="ticker-text"><span>🔥</span> ÚLTIMO: Mistral AI lanza su nuevo modelo 3.5 | <span>🔥</span> Google DeepMind anuncia avances en IA generativa | <span>🔥</span> Trump aprueba el uso de Claude de Anthropic | <span>🔥</span> Meta abre su modelo de lenguaje a investigadores</span>
             <span class="ticker-text"><span>🔥</span> ÚLTIMO: Mistral AI lanza su nuevo modelo 3.5 | <span>🔥</span> Google DeepMind anuncia avances en IA generativa | <span>🔥</span> Trump aprueba el uso de Claude de Anthropic | <span>🔥</span> Meta abre su modelo de lenguaje a investigadores</span>
+        </div>
+    </div>
+
+    <!-- Modal para mostrar el contenido de las noticias -->
+    <div id="modal-noticia" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <h2 id="modal-titulo"></h2>
+            <div id="modal-contenido" class="modal-body"></div>
         </div>
     </div>
 
@@ -526,7 +582,7 @@
             </div>
         </section>
 
-        <!-- Sección de últimas publicaciones con eventos onclick directos -->
+        <!-- Sección de últimas publicaciones -->
         <section class="publications-section">
             <h2>Últimas publicaciones</h2>
             <p class="intro">Noticias de IA en español, actualizadas cada 48 horas.</p>
@@ -540,7 +596,7 @@
                             <span>Hoy</span>
                             <span>· 5 min de lectura</span>
                         </div>
-                        <h3 class="noticia-titulo" onclick="window.open('https://www.xataka.com/robotica-e-ia/trump-firma-orden-ejecutiva-para-que-estados-unidos-lidere-mundo-ia', '_blank')">
+                        <h3 class="noticia-titulo" onclick="abrirModal('Trump aprueba el uso de Claude de Anthropic: ¿Qué significa para la IA?', 'El presidente Trump ha autorizado el uso de Claude en proyectos gubernamentales. Analizamos las implicaciones políticas y tecnológicas de esta decisión histórica. En este análisis, exploramos cómo esta decisión afectará a las empresas de IA en Europa y Estados Unidos, así como las posibles consecuencias para la regulación de la inteligencia artificial a nivel global.')">
                             Trump aprueba el uso de Claude de Anthropic: ¿Qué significa para la IA?
                         </h3>
                         <p>El presidente Trump ha autorizado el uso de Claude en proyectos gubernamentales. Analizamos las implicaciones políticas y tecnológicas de esta decisión histórica.</p>
@@ -556,7 +612,7 @@
                             <span>Ayer</span>
                             <span>· 6 min de lectura</span>
                         </div>
-                        <h3 class="noticia-titulo" onclick="window.open('https://www.xataka.com/robotica-e-ia/mistral-ai-lanza-nuevo-modelo-3-5-mas-rapido-preciso-que-nunca', '_blank')">
+                        <h3 class="noticia-titulo" onclick="abrirModal('Mistral AI lanza su nuevo modelo 3.5: más rápido y preciso que nunca', 'El nuevo modelo de Mistral supera a sus competidores en velocidad y precisión. Te contamos todas las novedades y cómo afectan a los desarrolladores. Con un 20% menos de consumo de energía y capacidad para procesar textos más largos, este modelo promete revolucionar el mercado de la IA en Europa.')">
                             Mistral AI lanza su nuevo modelo 3.5: más rápido y preciso que nunca
                         </h3>
                         <p>El nuevo modelo de Mistral supera a sus competidores en velocidad y precisión. Te contamos todas las novedades y cómo afectan a los desarrolladores.</p>
@@ -636,8 +692,28 @@
         <p>© 2026 NoticiasIA. La IA no espera.</p>
     </footer>
 
-    <!-- Script para Stripe y PayPal -->
+    <!-- Script para el modal y Stripe/PayPal -->
     <script>
+        // Función para abrir el modal con el contenido de la noticia
+        function abrirModal(titulo, contenido) {
+            document.getElementById('modal-titulo').textContent = titulo;
+            document.getElementById('modal-contenido').innerHTML = `<p>${contenido}</p>`;
+            document.getElementById('modal-noticia').style.display = 'block';
+        }
+
+        // Función para cerrar el modal
+        function cerrarModal() {
+            document.getElementById('modal-noticia').style.display = 'none';
+        }
+
+        // Cerrar el modal al hacer clic fuera de él
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal-noticia');
+            if (event.target === modal) {
+                cerrarModal();
+            }
+        }
+
         // Configuración de Stripe
         const stripe = Stripe('pk_test_TU_CLAVE_PUBLICA_STRIPE'); // Reemplaza con tu clave pública de Stripe
 
