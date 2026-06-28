@@ -526,12 +526,12 @@
             </div>
         </section>
 
-        <!-- Sección de últimas publicaciones -->
+        <!-- Sección de últimas publicaciones con eventos onclick directos -->
         <section class="publications-section">
             <h2>Últimas publicaciones</h2>
             <p class="intro">Noticias de IA en español, actualizadas cada 48 horas.</p>
             <div id="noticias-container">
-                <!-- Noticias de ejemplo estáticas -->
+                <!-- Noticia 1: Gratis -->
                 <div class="publication">
                     <div class="publication-icon">✓</div>
                     <div class="publication-content">
@@ -540,12 +540,14 @@
                             <span>Hoy</span>
                             <span>· 5 min de lectura</span>
                         </div>
-                        <h3 class="noticia-titulo" data-url="https://www.xataka.com/robotica-e-ia/trump-firma-orden-ejecutiva-para-que-estados-unidos-lidere-mundo-ia" data-index="0">
+                        <h3 class="noticia-titulo" onclick="window.open('https://www.xataka.com/robotica-e-ia/trump-firma-orden-ejecutiva-para-que-estados-unidos-lidere-mundo-ia', '_blank')">
                             Trump aprueba el uso de Claude de Anthropic: ¿Qué significa para la IA?
                         </h3>
                         <p>El presidente Trump ha autorizado el uso de Claude en proyectos gubernamentales. Analizamos las implicaciones políticas y tecnológicas de esta decisión histórica.</p>
                     </div>
                 </div>
+
+                <!-- Noticia 2: Gratis -->
                 <div class="publication">
                     <div class="publication-icon">✓</div>
                     <div class="publication-content">
@@ -554,12 +556,14 @@
                             <span>Ayer</span>
                             <span>· 6 min de lectura</span>
                         </div>
-                        <h3 class="noticia-titulo" data-url="https://www.xataka.com/robotica-e-ia/mistral-ai-lanza-nuevo-modelo-3-5-mas-rapido-preciso-que-nunca" data-index="1">
+                        <h3 class="noticia-titulo" onclick="window.open('https://www.xataka.com/robotica-e-ia/mistral-ai-lanza-nuevo-modelo-3-5-mas-rapido-preciso-que-nunca', '_blank')">
                             Mistral AI lanza su nuevo modelo 3.5: más rápido y preciso que nunca
                         </h3>
                         <p>El nuevo modelo de Mistral supera a sus competidores en velocidad y precisión. Te contamos todas las novedades y cómo afectan a los desarrolladores.</p>
                     </div>
                 </div>
+
+                <!-- Noticia 3: Pro -->
                 <div class="publication">
                     <div class="publication-icon">🔒</div>
                     <div class="publication-content">
@@ -568,7 +572,7 @@
                             <span>Hace 2 días</span>
                             <span>· 7 min de lectura</span>
                         </div>
-                        <h3 class="noticia-titulo" data-url="#" data-index="2">
+                        <h3 class="noticia-titulo" onclick="alert('Esta noticia es solo para suscriptores. Suscríbete para acceder al contenido completo.')">
                             Cómo usar la IA para automatizar tareas en tu empresa (guía práctica)
                         </h3>
                         <p>Descubre las herramientas de IA más útiles para automatizar procesos en tu negocio, desde atención al cliente hasta generación de informes.</p>
@@ -631,92 +635,6 @@
     <footer class="footer">
         <p>© 2026 NoticiasIA. La IA no espera.</p>
     </footer>
-
-    <!-- Script para cargar las noticias desde el feed RSS de Xataka IA (opcional) -->
-    <script>
-        // Función para cargar noticias desde el feed RSS (opcional)
-        async function cargarNoticias() {
-            try {
-                const proxyUrl = "https://api.allorigins.win/get?url=";
-                const feedUrl = "https://www.xataka.com/tag/ia/feed";
-                const response = await fetch(proxyUrl + encodeURIComponent(feedUrl));
-                const data = await response.json();
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(data.contents, "text/xml");
-                const items = xmlDoc.getElementsByTagName("item");
-
-                const noticias = [];
-                for (let i = 0; i < items.length; i++) {
-                    const item = items[i];
-                    noticias.push({
-                        title: item.getElementsByTagName("title")[0].textContent,
-                        description: item.getElementsByTagName("description")[0].textContent,
-                        link: item.getElementsByTagName("link")[0].textContent,
-                        pubDate: item.getElementsByTagName("pubDate")[0].textContent
-                    });
-                }
-
-                const noticiasFiltradas = noticias
-                    .filter(noticia => {
-                        const titulo = noticia.title.toLowerCase();
-                        return titulo.includes("ia") ||
-                               titulo.includes("inteligencia artificial") ||
-                               titulo.includes("mistral") ||
-                               titulo.includes("claude");
-                    })
-                    .slice(0, 10);
-
-                const container = document.getElementById('noticias-container');
-                container.innerHTML = '';
-
-                noticiasFiltradas.forEach((noticia, index) => {
-                    const tipo = index < 2 ? "Gratis" : "Pro";
-                    const icono = tipo === "Pro" ? "🔒" : "✓";
-                    const badgeClass = tipo === "Pro" ? "pro-badge" : "free-badge";
-                    const fecha = new Date(noticia.pubDate);
-                    const hoy = new Date();
-                    const diffDias = Math.floor((hoy - fecha) / (1000 * 60 * 60 * 24));
-                    const fechaTexto = diffDias === 0 ? "Hoy" : `Hace ${diffDias} día${diffDias !== 1 ? 's' : ''}`;
-
-                    const publication = document.createElement('div');
-                    publication.className = 'publication';
-                    publication.innerHTML = `
-                        <div class="publication-icon">${icono}</div>
-                        <div class="publication-content">
-                            <div class="publication-meta">
-                                <span class="${badgeClass}">${tipo}</span>
-                                <span>${fechaTexto}</span>
-                                <span>· 5 min de lectura</span>
-                            </div>
-                            <h3 class="noticia-titulo" data-url="${noticia.link}" data-index="${index}">${noticia.title}</h3>
-                            <p>${noticia.description.substring(0, 100)}...</p>
-                        </div>
-                    `;
-                    container.appendChild(publication);
-                });
-
-                document.querySelectorAll('.noticia-titulo').forEach(titulo => {
-                    titulo.addEventListener('click', () => {
-                        const url = titulo.getAttribute('data-url');
-                        const index = parseInt(titulo.getAttribute('data-index'));
-                        const esPro = index >= 2;
-
-                        if (esPro) {
-                            alert('Esta noticia es solo para suscriptores. Suscríbete para acceder al contenido completo.');
-                        } else {
-                            window.open(url, '_blank');
-                        }
-                    });
-                });
-
-            } catch (error) {
-                console.error('Error al cargar las noticias:', error);
-            }
-        }
-
-        // Cargar noticias al cargar la página (opcional, ahora mismo se muestran las estáticas)
-        // window.addEventListener('DOMContentLoaded', cargarNoticias);
-    </script>
 
     <!-- Script para Stripe y PayPal -->
     <script>
