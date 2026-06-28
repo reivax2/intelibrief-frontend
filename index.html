@@ -1,513 +1,896 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NoticiasIA — IA sin filtros, cada semana</title>
-<meta name="description" content="Lo que pasa en inteligencia artificial esta semana, explicado en 5 minutos. Sin jerga, sin hype. Análisis honesto para personas ocupadas.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<script src="https://js.stripe.com/v3/"></script>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --ink:#0f0f0f;
-  --ink2:#3a3a3a;
-  --ink3:#6b6b6b;
-  --paper:#fafaf8;
-  --paper2:#f2f2ee;
-  --paper3:#e8e8e2;
-  --accent:#d4500a;
-  --accent-light:#fdf1ea;
-  --blue:#1a5fa8;
-  --blue-light:#eaf1fb;
-  --green:#1a6b3a;
-  --green-light:#eaf5ef;
-  --border:rgba(0,0,0,0.09);
-  --r:8px;
-}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;font-size:15px}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoticiasIA — IA sin filtros, cada semana</title>
+    <meta name="description" content="Lo que pasa en inteligencia artificial esta semana, explicado en 5 minutos. Sin jerga, sin hype. Análisis honesto para personas ocupadas.">
 
-/* TICKER */
-.ticker-wrap{background:var(--ink);color:#fff;padding:8px 0;overflow:hidden;white-space:nowrap}
-.ticker-content{display:inline-block;animation:ticker 25s linear infinite}
-.ticker-content:hover{animation-play-state:paused}
-@keyframes ticker{
-  0%{transform:translateX(100vw)}
-  75%{transform:translateX(-100%)}
-  75.001%{visibility:hidden;transform:translateX(100vw)}
-  80%{visibility:hidden;transform:translateX(100vw)}
-  80.001%{visibility:visible;transform:translateX(100vw)}
-  100%{transform:translateX(100vw)}
-}
-.ticker-text{font-size:13px;font-weight:500;letter-spacing:0.03em;padding:0 40px}
-.ticker-text span{color:var(--accent);margin-right:8px}
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="NoticiasIA — IA sin filtros, cada semana">
+    <meta property="og:description" content="Análisis semanal de inteligencia artificial para profesionales ocupados.">
+    <meta property="og:image" content="https://actualidad-dela-ia.vercel.app/og-image.jpg">
+    <meta property="og:url" content="https://actualidad-dela-ia.vercel.app/">
 
-/* TOPBAR */
-.topbar{background:var(--accent);color:#fff;text-align:center;padding:10px 24px;font-size:13px;font-weight:500;letter-spacing:0.01em}
-.topbar a{color:#fff;text-decoration:underline;cursor:pointer}
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
-/* NAV */
-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--border);background:rgba(250,250,248,0.96);backdrop-filter:blur(8px);position:sticky;top:0;z-index:100}
-.logo{display:flex;align-items:baseline;gap:2px}
-.logo-word{font-family:'Instrument Serif',serif;font-size:20px;color:var(--ink)}
-.logo-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;margin:0 1px 2px}
-.nav-right{display:flex;align-items:center;gap:10px}
-.badge-new{background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;letter-spacing:0.03em}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all 0.15s;letter-spacing:0.01em}
-.btn-ghost{background:transparent;color:var(--ink2);border:1px solid var(--border)}
-.btn-ghost:hover{background:var(--paper2)}
-.btn-cta{background:var(--ink);color:#fff}
-.btn-cta:hover{background:#2a2a2a;transform:translateY(-1px)}
-.btn-accent{background:var(--accent);color:#fff}
-.btn-accent:hover{opacity:0.9;transform:translateY(-1px)}
+    <!-- Stripe JS -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- PayPal JS -->
+    <script src="https://www.paypal.com/sdk/js?client-id=TU_CLIENT_ID_PAYPAL&currency=EUR"></script>
 
-/* HERO */
-.hero{max-width:780px;margin:0 auto;padding:72px 32px 56px;text-align:center}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:24px}
-.hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:32px;height:1px;background:var(--paper3)}
-.hero h1{font-family:'Instrument Serif',serif;font-size:clamp(36px,6vw,58px);line-height:1.1;letter-spacing:-0.02em;color:var(--ink);margin-bottom:20px}
-.hero h1 em{font-style:italic;color:var(--accent)}
-.hero-sub{font-size:17px;color:var(--ink2);max-width:480px;margin:0 auto 32px;line-height:1.65}
-.hero-actions{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-.hero-fine{font-size:12px;color:var(--ink3)}
-.hero-fine span{margin:0 8px}
+    <style>
+        :root {
+            --ink: #0f0f0f;
+            --ink2: #3a3a3a;
+            --ink3: #6b6b6b;
+            --paper: #fafaf8;
+            --paper2: #f2f2ee;
+            --paper3: #e8e8e2;
+            --accent: #d4500a;
+            --accent-light: #fdf1ea;
+            --blue: #1a5fa8;
+            --blue-light: #eaf1fb;
+            --green: #1a6b3a;
+            --green-light: #eaf5ef;
+            --border: rgba(0, 0, 0, 0.09);
+            --r: 8px;
+        }
 
-/* TRUST BAR */
-.trust{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;background:var(--paper)}
-.trust-item{display:flex;flex-direction:column;align-items:center;gap:3px}
-.trust-num{font-family:'Instrument Serif',serif;font-size:26px;color:var(--ink);line-height:1}
-.trust-lbl{font-size:11px;color:var(--ink3);font-weight:500;text-transform:uppercase;letter-spacing:0.06em}
-.trust-divider{width:1px;height:40px;background:var(--border)}
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-/* SAMPLE ISSUE */
-.sample-section{max-width:780px;margin:0 auto;padding:56px 32px}
-.section-label{font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:24px;display:flex;align-items:center;gap:12px}
-.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.articles{display:flex;flex-direction:column;gap:1px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--paper3)}
-.art{background:var(--paper);padding:20px 24px;display:flex;gap:20px;align-items:flex-start;cursor:pointer;transition:background 0.1s;border-bottom:1px solid var(--border)}
-.art:last-child{border-bottom:none}
-.art:hover{background:var(--paper2)}
-.art.locked{opacity:0.6;cursor:default}
-.art-num{font-family:'Instrument Serif',serif;font-size:28px;color:var(--paper3);line-height:1;flex-shrink:0;margin-top:2px;user-select:none}
-.art-body{flex:1;min-width:0}
-.art-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:2px 8px;border-radius:4px;margin-bottom:8px}
-.tag-free{background:var(--green-light);color:var(--green)}
-.tag-pro{background:var(--blue-light);color:var(--blue)}
-.art-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px;line-height:1.35}
-.art-excerpt{font-size:13px;color:var(--ink3);line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.art-meta{font-size:11px;color:var(--ink3);margin-top:6px}
+        html {
+            scroll-behavior: smooth;
+        }
 
-/* READER */
-.reader-wrap{max-width:680px;margin:0 auto;padding:0 32px 40px;display:none}
-.reader-card{border:1px solid var(--border);border-radius:12px;padding:28px;background:#fff}
-.reader-ai{display:inline-flex;align-items:center;gap:6px;background:#EEEDFE;color:#3C3489;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;margin-bottom:16px;letter-spacing:0.03em}
-.reader-title{font-family:'Instrument Serif',serif;font-size:22px;color:var(--ink);margin-bottom:16px;line-height:1.3}
-.reader-body{font-size:15px;line-height:1.8;color:var(--ink2);white-space:pre-wrap}
-.reader-actions{display:flex;gap:8px;margin-top:20px}
-.spin{width:12px;height:12px;border:2px solid #AFA9EC;border-top-color:#534AB7;border-radius:50%;animation:spin 0.7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--ink);
+            background: var(--paper);
+            line-height: 1.6;
+            font-size: 15px;
+        }
 
-/* PAYWALL */
-.paywall-wrap{max-width:560px;margin:0 auto;padding:0 32px 56px;display:none}
-.paywall-card{border:1px solid var(--border);border-radius:16px;padding:36px;text-align:center;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.06)}
-.paywall-icon{font-size:36px;margin-bottom:12px}
-.paywall-card h2{font-family:'Instrument Serif',serif;font-size:26px;color:var(--ink);margin-bottom:8px}
-.paywall-card p{font-size:14px;color:var(--ink3);margin-bottom:28px;line-height:1.6;max-width:360px;margin-left:auto;margin-right:auto}
-.plans{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-.plan{border:1.5px solid var(--border);border-radius:10px;padding:20px;text-align:left;background:var(--paper)}
-.plan.best{border-color:var(--ink);background:#fff;position:relative}
-.plan-best-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:10px;font-weight:700;padding:2px 12px;border-radius:99px;letter-spacing:0.05em;white-space:nowrap}
-.plan-name{font-size:12px;font-weight:600;color:var(--ink3);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em}
-.plan-price{font-family:'Instrument Serif',serif;font-size:30px;color:var(--ink);margin-bottom:4px;line-height:1}
-.plan-price sub{font-size:14px;font-family:'Inter',sans-serif;font-weight:400;color:var(--ink3)}
-.plan-desc{font-size:12px;color:var(--ink3);margin-bottom:14px;line-height:1.4}
-.plan-features{list-style:none;font-size:12px;color:var(--ink2);margin-bottom:16px;display:flex;flex-direction:column;gap:6px}
-.plan-features li{display:flex;align-items:center;gap:6px}
-.plan-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
-.paywall-fine{font-size:11px;color:var(--ink3)}
+        /* Ticker */
+        .ticker-wrap {
+            background: var(--ink);
+            color: #fff;
+            padding: 8px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
 
-/* WHY */
-.why{background:var(--paper2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:56px 32px}
-.why-inner{max-width:780px;margin:0 auto}
-.why h2{font-family:'Instrument Serif',serif;font-size:32px;color:var(--ink);margin-bottom:8px}
-.why-sub{font-size:15px;color:var(--ink3);margin-bottom:36px}
-.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
-.why-item{background:var(--paper);border:1px solid var(--border);border-radius:10px;padding:20px}
-.why-icon{font-size:22px;margin-bottom:10px}
-.why-item h3{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px}
-.why-item p{font-size:13px;color:var(--ink3);line-height:1.55}
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 30s linear infinite;
+        }
 
-/* TESTIMONIALS */
-.testimonials{max-width:780px;margin:0 auto;padding:56px 32px}
-.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-.testi{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px}
-.testi-stars{color:#f5a623;font-size:13px;margin-bottom:10px}
-.testi-text{font-size:13px;color:var(--ink2);line-height:1.6;margin-bottom:12px;font-style:italic}
-.testi-author{font-size:12px;font-weight:600;color:var(--ink3)}
+        .ticker-content:hover {
+            animation-play-state: paused;
+        }
 
-/* CTA BOTTOM */
-.cta-bottom{background:var(--ink);color:#fff;padding:64px 32px;text-align:center}
-.cta-bottom h2{font-family:'Instrument Serif',serif;font-size:36px;margin-bottom:12px;line-height:1.2}
-.cta-bottom p{font-size:15px;color:rgba(255,255,255,0.65);margin-bottom:28px}
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
 
-/* FOOTER */
-footer{border-top:1px solid var(--border);padding:24px 32px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--ink3);flex-wrap:wrap;gap:12px;background:var(--paper)}
+        .ticker-text {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            padding: 0 40px;
+        }
 
-/* SUCCESS */
-.success-bar{background:var(--green-light);color:var(--green);padding:14px 32px;text-align:center;font-size:14px;font-weight:600;display:none;border-bottom:1px solid rgba(26,107,58,0.2)}
+        .ticker-text span {
+            color: var(--accent);
+            margin-right: 8px;
+        }
 
-@media(max-width:600px){
-  nav{padding:12px 16px}
-  .hero{padding:48px 16px 40px}
-  .trust{gap:20px;padding:16px}
-  .trust-divider{display:none}
-  .sample-section,.testimonials{padding:40px 16px}
-  .why{padding:40px 16px}
-  .plans{grid-template-columns:1fr}
-  .paywall-wrap,.reader-wrap{padding:0 16px 40px}
-  footer{flex-direction:column;text-align:center}
-}
-</style>
+        /* Contenedor principal */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Encabezado */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 36px;
+            margin-bottom: 8px;
+            color: var(--ink);
+        }
+
+        header p {
+            color: var(--ink2);
+            font-size: 18px;
+        }
+
+        /* Sección "Por qué NoticiasIA" */
+        .why-section {
+            background: var(--paper2);
+            padding: 40px;
+            border-radius: var(--r);
+            margin: 40px 0;
+        }
+
+        .why-section h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--ink);
+        }
+
+        .why-section p {
+            margin-bottom: 16px;
+            color: var(--ink2);
+        }
+
+        .why-section .feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .why-section .feature-icon {
+            font-size: 20px;
+            margin-right: 12px;
+        }
+
+        .why-section .feature-text {
+            flex: 1;
+        }
+
+        .why-section .feature-text strong {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        /* Testimonios */
+        .testimonials {
+            margin-top: 40px;
+        }
+
+        .testimonials h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--ink);
+        }
+
+        .testimonial {
+            background: var(--paper3);
+            padding: 20px;
+            border-radius: var(--r);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .testimonial .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 16px;
+            background: var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .testimonial-content {
+            flex: 1;
+        }
+
+        .testimonial-content p {
+            font-style: italic;
+            margin-bottom: 8px;
+            color: var(--ink2);
+        }
+
+        .testimonial-content strong {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        /* Botón CTA */
+        .cta-button {
+            background: var(--accent);
+            color: white;
+            padding: 14px 28px;
+            border-radius: var(--r);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 5px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .cta-button:hover {
+            background: #b84509;
+        }
+
+        .cta-button-secondary {
+            background: var(--paper3);
+            color: var(--ink);
+            border: 1px solid var(--border);
+        }
+
+        /* Sección de publicaciones */
+        .publications-section {
+            margin: 60px 0;
+        }
+
+        .publications-section h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--ink);
+        }
+
+        .publications-section p.intro {
+            color: var(--ink2);
+            margin-bottom: 30px;
+        }
+
+        /* Estilos para las noticias */
+        .publication {
+            background: white;
+            padding: 20px;
+            margin-bottom: 16px;
+            border-radius: var(--r);
+            border: 1px solid var(--border);
+            display: flex;
+            transition: box-shadow 0.2s;
+        }
+
+        .publication:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .publication-icon {
+            margin-right: 16px;
+            font-size: 20px;
+        }
+
+        .publication-content {
+            flex: 1;
+        }
+
+        .publication-content h3 {
+            margin-bottom: 8px;
+            cursor: pointer;
+            color: var(--ink);
+        }
+
+        .publication-content h3:hover {
+            color: var(--accent);
+        }
+
+        .publication-meta {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: var(--ink3);
+            margin-bottom: 8px;
+        }
+
+        .publication-meta span {
+            margin-right: 12px;
+        }
+
+        .pro-badge {
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .free-badge {
+            background: var(--green-light);
+            color: var(--green);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Modal para el contenido completo */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: var(--paper);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: var(--r);
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .close {
+            color: var(--ink3);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: var(--ink);
+        }
+
+        .modal-body {
+            margin-top: 20px;
+            line-height: 1.8;
+            color: var(--ink2);
+        }
+
+        /* Sección de suscripción */
+        .subscription-section {
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .subscription-section h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 28px;
+            margin-bottom: 16px;
+            color: var(--ink);
+        }
+
+        .subscription-section p {
+            color: var(--ink2);
+            margin-bottom: 24px;
+        }
+
+        .pricing-plans {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .plan {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 24px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .plan.popular {
+            border-color: var(--accent);
+            position: relative;
+        }
+
+        .plan.popular::before {
+            content: "MÁS POPULAR";
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .plan h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: var(--ink);
+        }
+
+        .plan .price {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+
+        .plan .description {
+            color: var(--ink3);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .plan ul {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .plan ul li {
+            margin-bottom: 8px;
+            color: var(--ink2);
+            font-size: 14px;
+        }
+
+        .plan ul li::before {
+            content: "✓";
+            color: var(--green);
+            margin-right: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--ink3);
+            font-size: 14px;
+        }
+
+        /* Estilos para Stripe y PayPal */
+        #card-element {
+            background: white;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            margin-bottom: 16px;
+        }
+
+        #payment-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        #payment-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            font-size: 16px;
+        }
+
+        #payment-form button {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--r);
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #payment-form button:hover {
+            background: #b84509;
+        }
+
+        /* PayPal Buttons */
+        #paypal-button-container {
+            margin: 20px 0;
+        }
+    </style>
 </head>
 <body>
-
-<div class="success-bar" id="success-bar">✓ ¡Bienvenido a NoticiasIA! Revisa tu email para activar tu acceso.</div>
-
-<!-- TICKER DE NOTICIAS -->
-<div class="ticker-wrap">
-  <div class="ticker-content">
-    <span class="ticker-text"><span>⚡</span>Actualización de noticias de IA al momento — Todo lo que necesitas saber sobre inteligencia artificial, explicado sin tecnicismos, cada 48 horas</span>
-  </div>
-</div>
-
-<div class="topbar">🎉 Primera semana gratis — sin tarjeta · <a onclick="showPaywall()">Empieza ahora</a></div>
-
-<nav>
-  <div class="logo">
-    <span class="logo-word">Noticias IA</span>
-    <div class="logo-dot"></div>
-  </div>
-  <div class="nav-right">
-    <span class="badge-new">Nuevo cada 48h</span>
-    <button class="btn btn-ghost" onclick="showPaywall()">Entrar</button>
-    <button class="btn btn-cta" onclick="showPaywall()">Suscribirse</button>
-  </div>
-</nav>
-
-<section class="hero">
-  <div class="hero-eyebrow">Inteligencia artificial · Sin tecnicismos</div>
-  <h1>Lo que pasa en IA<br>esta semana, en <em>5 minutos</em></h1>
-  <p class="hero-sub">Análisis honestos, herramientas útiles y noticias relevantes. Sin hype, sin jerga. Para personas que quieren estar al día sin perder el tiempo.</p>
-  <div class="hero-actions">
-    <button class="btn btn-accent" style="font-size:15px;padding:12px 28px" onclick="showPaywall()">Empezar gratis 7 días →</button>
-    <button class="btn btn-ghost" onclick="document.getElementById('articulos').scrollIntoView({behavior:'smooth'})">Ver un ejemplo</button>
-  </div>
-  <p class="hero-fine">Desde 7€/mes<span>·</span>Cancela cuando quieras<span>·</span>Sin compromiso</p>
-</section>
-
-<div class="trust">
-  <div class="trust-item"><div class="trust-num">2x</div><div class="trust-lbl">por semana</div></div>
-  <div class="trust-divider"></div>
-  <div class="trust-item"><div class="trust-num">5'</div><div class="trust-lbl">de lectura</div></div>
-  <div class="trust-divider"></div>
-  <div class="trust-item"><div class="trust-num">0</div><div class="trust-lbl">tecnicismos</div></div>
-  <div class="trust-divider"></div>
-  <div class="trust-item"><div class="trust-num">100%</div><div class="trust-lbl">independiente</div></div>
-</div>
-
-<!-- READER -->
-<div class="reader-wrap" id="reader">
-  <div class="reader-card">
-    <div class="reader-ai"><div class="spin" id="spin"></div><span id="ai-badge-text">Cargando artículo...</span></div>
-    <h2 class="reader-title" id="reader-title"></h2>
-    <div class="reader-body" id="reader-body"></div>
-    <div class="reader-actions">
-      <button class="btn btn-ghost" style="font-size:12px;padding:6px 14px" onclick="regenArticle()">↻ Regenerar</button>
-      <button class="btn btn-ghost" style="font-size:12px;padding:6px 14px" onclick="closeReader()">✕ Cerrar</button>
+    <!-- Ticker -->
+    <div class="ticker-wrap">
+        <div class="ticker-content">
+            <span class="ticker-text"><span>🔥</span> ÚLTIMO: Mistral AI lanza su nuevo modelo 3.5 | <span>🔥</span> Google DeepMind anuncia avances en IA generativa | <span>🔥</span> Trump aprueba el uso de Claude de Anthropic | <span>🔥</span> Meta abre su modelo de lenguaje a investigadores</span>
+            <span class="ticker-text"><span>🔥</span> ÚLTIMO: Mistral AI lanza su nuevo modelo 3.5 | <span>🔥</span> Google DeepMind anuncia avances en IA generativa | <span>🔥</span> Trump aprueba el uso de Claude de Anthropic | <span>🔥</span> Meta abre su modelo de lenguaje a investigadores</span>
+        </div>
     </div>
-  </div>
-</div>
 
-<!-- PAYWALL -->
-<div class="paywall-wrap" id="paywall">
-  <div class="paywall-card">
-    <div class="paywall-icon">📬</div>
-    <h2>Accede a todo NoticiasIA</h2>
-    <p>Análisis de IA que realmente importan, dos veces por semana. Directo al grano, sin ruido.</p>
-    <div class="plans">
-      <div class="plan">
-        <div class="plan-name">Básico</div>
-        <div class="plan-price">7€<sub>/mes</sub></div>
-        <div class="plan-desc">Para mantenerse al día</div>
-        <ul class="plan-features">
-          <li>2 análisis Pro por semana</li>
-          <li>Archivo de 3 meses</li>
-          <li>Newsletter semanal</li>
-        </ul>
-        <button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="checkout('price_1TkVBFA25LaZKjnKAJpPdZ8I')">Empezar gratis</button>
-      </div>
-      <div class="plan best">
-        <div class="plan-best-badge">MÁS POPULAR</div>
-        <div class="plan-name">Pro</div>
-        <div class="plan-price">12€<sub>/mes</sub></div>
-        <div class="plan-desc">Acceso total sin límites</div>
-        <ul class="plan-features">
-          <li>Todo el contenido</li>
-          <li>Archivo completo</li>
-          <li>Acceso anticipado</li>
-          <li>Informes especiales</li>
-        </ul>
-        <button class="btn btn-accent" style="width:100%;justify-content:center" onclick="checkout('price_1TkVG1A25LaZKjnKz7ATpJDP')">Suscribirme →</button>
-      </div>
-    </div>
-    <p class="paywall-fine">🔒 Pago seguro · Cancela en cualquier momento · Sin permanencia</p>
-    <button class="btn btn-ghost" style="font-size:12px;padding:6px 14px;margin-top:12px" onclick="hidePaywall()">No ahora</button>
-  </div>
-</div>
+    <div class="container">
+        <header>
+            <h1>NoticiasIA</h1>
+            <p>IA sin filtros, cada semana</p>
+        </header>
 
-<!-- ARTÍCULOS -->
-<div class="sample-section" id="articulos">
-  <div class="section-label">Últimas publicaciones</div>
-  <div class="articles">
-    <div class="art" onclick="openArticle(0)">
-      <div class="art-num">01</div>
-      <div class="art-body">
-        <div class="art-tag tag-free">✓ Gratis</div>
-        <div class="art-title">ChatGPT, Gemini o Claude: ¿cuál te conviene usar en 2026?</div>
-        <div class="art-excerpt">Comparativa honesta de los tres grandes. Sin publicidad, sin afiliados. Solo lo que necesitas saber para elegir.</div>
-        <div class="art-meta">Hace 1 hora · 4 min de lectura</div>
-      </div>
-    </div>
-    <div class="art" onclick="openArticle(1)">
-      <div class="art-num">02</div>
-      <div class="art-body">
-        <div class="art-tag tag-free">✓ Gratis</div>
-        <div class="art-title">5 tareas del trabajo que ya puedes automatizar con IA hoy mismo</div>
-        <div class="art-excerpt">Emails, resúmenes, informes, traducciones... herramientas concretas y gratuitas para cada caso.</div>
-        <div class="art-meta">Ayer · 5 min de lectura</div>
-      </div>
-    </div>
-    <div class="art locked" onclick="showPaywall()">
-      <div class="art-num">03</div>
-      <div class="art-body">
-        <div class="art-tag tag-pro">🔒 Pro</div>
-        <div class="art-title">Gana dinero con IA desde casa: 7 métodos reales probados</div>
-        <div class="art-excerpt">Sin inversión inicial, sin experiencia técnica. Métodos que ya funcionan para miles de personas en 2026.</div>
-        <div class="art-meta">Hace 2 horas · 6 min de lectura</div>
-      </div>
-    </div>
-    <div class="art locked" onclick="showPaywall()">
-      <div class="art-num">04</div>
-      <div class="art-body">
-        <div class="art-tag tag-pro">🔒 Pro</div>
-        <div class="art-title">Cómo usar la IA para ganar tu primer euro online</div>
-        <div class="art-excerpt">Guía práctica paso a paso. Desde cero hasta tu primera venta usando herramientas de inteligencia artificial.</div>
-        <div class="art-meta">Hace 1 día · 5 min de lectura</div>
-      </div>
-    </div>
-    <div class="art locked" onclick="showPaywall()">
-      <div class="art-num">05</div>
-      <div class="art-body">
-        <div class="art-tag tag-pro">🔒 Pro</div>
-        <div class="art-title">Agentes de IA: qué son y cómo van a cambiar tu trabajo</div>
-        <div class="art-excerpt">La próxima revolución ya está aquí. Te explicamos qué son los agentes de IA y qué significa para tu empleo.</div>
-        <div class="art-meta">Hace 2 días · 5 min de lectura</div>
-      </div>
-    </div>
-    <div class="art locked" onclick="showPaywall()">
-      <div class="art-num">06</div>
-      <div class="art-body">
-        <div class="art-tag tag-pro">🔒 Pro</div>
-        <div class="art-title">IA en el trabajo: quién gana y quién pierde en 2026</div>
-        <div class="art-excerpt">Análisis honesto de qué empleos están en riesgo y cuáles se refuerzan con la inteligencia artificial.</div>
-        <div class="art-meta">Hace 3 días · 6 min de lectura</div>
-      </div>
-    </div>
-    <div class="art locked" onclick="showPaywall()">
-      <div class="art-num">07</div>
-      <div class="art-body">
-        <div class="art-tag tag-pro">🔒 Pro</div>
-        <div class="art-title">Privacidad y ética en IA: lo que nadie te explica</div>
-        <div class="art-excerpt">Qué datos recopilan las IAs, quién los usa y cómo protegerte. Sin tecnicismos, con ejemplos reales.</div>
-        <div class="art-meta">Hace 4 días · 6 min de lectura</div>
-      </div>
-    </div>
-    <div class="art locked" onclick="showPaywall()">
-      <div class="art-num">08</div>
-      <div class="art-body">
-        <div class="art-tag tag-pro">🔒 Pro</div>
-        <div class="art-title">IA generativa para creativos: imágenes, vídeo y audio gratis</div>
-        <div class="art-excerpt">Las mejores herramientas gratuitas para crear contenido visual y sonoro con IA. Con ejemplos y comparativas.</div>
-        <div class="art-meta">Hace 5 días · 7 min de lectura</div>
-      </div>
-    </div>
-    <div class="art locked" onclick="showPaywall()">
-      <div class="art-num">09</div>
-      <div class="art-body">
-        <div class="art-tag tag-pro">🔒 Pro</div>
-        <div class="art-title">Cómo tomar notas y resumir reuniones con IA en 5 minutos</div>
-        <div class="art-excerpt">Las herramientas que usan los profesionales para no perder ni una idea. Gratis y de pago, comparadas.</div>
-        <div class="art-meta">Hace 6 días · 4 min de lectura</div>
-      </div>
-    </div>
-    <div class="art locked" onclick="showPaywall()">
-      <div class="art-num">10</div>
-      <div class="art-body">
-        <div class="art-tag tag-pro">🔒 Pro</div>
-        <div class="art-title">Informe semanal: todo lo que movió la IA esta semana</div>
-        <div class="art-excerpt">OpenAI, Google, Meta, Anthropic, xAI. Los movimientos que importan resumidos en 5 minutos.</div>
-        <div class="art-meta">Hace 7 días · 5 min de lectura</div>
-      </div>
-    </div>
-  </div>
-</div>
+        <section class="why-section">
+            <h2>Por qué NoticiasIA</h2>
+            <p><strong>Lo que no encontrarás en los medios generalistas ni en los blogs técnicos.</strong></p>
 
-<!-- POR QUÉ NOTICIASIA -->
-<div class="why">
-  <div class="why-inner">
-    <h2>Por qué NoticiasIA</h2>
-    <p class="why-sub">Lo que no encontrarás en los medios generalistas ni en los blogs técnicos.</p>
-    <div class="why-grid">
-      <div class="why-item">
-        <div class="why-icon">🎯</div>
-        <h3>Solo lo que importa</h3>
-        <p>Filtramos el ruido. Cada pieza está seleccionada porque tiene impacto real en tu vida o trabajo.</p>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">🗣️</div>
-        <h3>Sin tecnicismos</h3>
-        <p>Explicamos conceptos complejos en lenguaje normal. Si no lo entiendes tú, lo reescribimos.</p>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">⏱️</div>
-        <h3>Respeta tu tiempo</h3>
-        <p>Cada análisis está pensado para leerse en 5 minutos. Denso de información, ligero de palabrería.</p>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">🔍</div>
-        <h3>Independiente</h3>
-        <p>Sin anunciantes, sin afiliados, sin agendas. Solo nuestra opinión honesta sobre lo que cubrimos.</p>
-      </div>
+            <div class="feature">
+                <span class="feature-icon">🎯</span>
+                <div class="feature-text">
+                    <strong>Solo lo que importa</strong><br>
+                    Filtramos el ruido. Cada pieza está seleccionada porque tiene impacto real en tu vida o trabajo.
+                </div>
+            </div>
+
+            <div class="feature">
+                <span class="feature-icon">🗣️</span>
+                <div class="feature-text">
+                    <strong>Sin tecnicismos</strong><br>
+                    Explicamos conceptos complejos en lenguaje normal. Si no lo entiendes tú, lo reescribimos.
+                </div>
+            </div>
+
+            <div class="feature">
+                <span class="feature-icon">⏱️</span>
+                <div class="feature-text">
+                    <strong>Respeta tu tiempo</strong><br>
+                    Cada análisis está pensado para leerse en 5 minutos. Denso de información, ligero de palabrería.
+                </div>
+            </div>
+
+            <div class="feature">
+                <span class="feature-icon">🔍</span>
+                <div class="feature-text">
+                    <strong>Independiente</strong><br>
+                    Sin anunciantes, sin afiliados, sin agendas. Solo nuestra opinión honesta sobre lo que cubrimos.
+                </div>
+            </div>
+
+            <div class="testimonials">
+                <h3>Lo que dicen los lectores</h3>
+
+                <div class="testimonial">
+                    <div class="avatar">MG</div>
+                    <div class="testimonial-content">
+                        <p>“Por fin una newsletter de IA que no necesito Google para entender. Directa y sin rodeos.”</p>
+                        <strong>— María G. · Profesora</strong>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="avatar">CM</div>
+                    <div class="testimonial-content">
+                        <p>“Me ahorra horas de leer Twitter y blogs. En 5 minutos sé todo lo relevante de la semana.”</p>
+                        <strong>— Carlos M. · Autónomo</strong>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="avatar">LP</div>
+                    <div class="testimonial-content">
+                        <p>“El análisis de herramientas es increíblemente útil. Ya he cambiado mi flujo de trabajo gracias a varios artículos.”</p>
+                        <strong>— Laura P. · Diseñadora</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <p><strong>Únete a +300 profesionales que ya lo leen</strong></p>
+                <a href="#suscripcion" class="cta-button">Ver planes de suscripción</a>
+            </div>
+        </section>
+
+        <section class="publications-section">
+            <h2>Últimas publicaciones</h2>
+            <p class="intro">Noticias de IA en español, actualizadas automáticamente cada 48 horas.</p>
+            <div id="noticias-container">
+                <p style="text-align: center; color: var(--ink3);">Cargando noticias... Si no se muestran, la página se actualizará automáticamente al desplegarse en Vercel.</p>
+            </div>
+        </section>
+
+        <section id="suscripcion" class="subscription-section">
+            <h2>Planes de suscripción</h2>
+            <p>Elige el plan que mejor se adapte a ti. Cancela cuando quieras.</p>
+
+            <div class="pricing-plans">
+                <!-- Plan Básico -->
+                <div class="plan">
+                    <h3>Básico</h3>
+                    <div class="price">7€/mes</div>
+                    <div class="description">Para mantenerse al día</div>
+                    <ul>
+                        <li>2 análisis Pro por semana</li>
+                        <li>Archivo de 3 meses</li>
+                        <li>Newsletter semanal</li>
+                    </ul>
+                    <button class="cta-button cta-button-secondary" onclick="seleccionarPlan('basico')">Empezar gratis 7 días</button>
+                </div>
+
+                <!-- Plan Pro -->
+                <div class="plan popular">
+                    <h3>Pro</h3>
+                    <div class="price">12€/mes</div>
+                    <div class="description">Acceso total sin límites</div>
+                    <ul>
+                        <li>Todo el contenido</li>
+                        <li>Archivo completo</li>
+                        <li>Acceso anticipado</li>
+                        <li>Informes especiales</li>
+                    </ul>
+                    <button class="cta-button" onclick="seleccionarPlan('pro')">Empezar gratis 14 días</button>
+                </div>
+            </div>
+
+            <!-- Formulario de pago (oculto por defecto) -->
+            <div id="payment-form-container" style="display: none;">
+                <h3 id="payment-title">Suscripción a NoticiasIA</h3>
+                <form id="payment-form">
+                    <input type="email" id="email" placeholder="Tu email" required>
+                    <input type="text" id="name" placeholder="Tu nombre" required>
+                    <div id="card-element"><!-- Stripe insertará el formulario de tarjeta aquí --></div>
+                    <div id="paypal-button-container"></div>
+                    <button type="submit" id="submit-button">Completar suscripción</button>
+                </form>
+                <p style="font-size: 12px; color: var(--ink3); margin-top: 10px;">
+                    🔒 Pago seguro · Cancela en cualquier momento · Sin permanencia
+                </p>
+            </div>
+        </section>
     </div>
-  </div>
-</div>
 
-<!-- TESTIMONIOS -->
-<div class="testimonials">
-  <div class="section-label">Lo que dicen los lectores</div>
-  <div class="testi-grid">
-    <div class="testi">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">"Por fin una newsletter de IA que no necesito Google para entender. Directa y sin rodeos."</p>
-      <div class="testi-author">María G. · Profesora</div>
-    </div>
-    <div class="testi">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">"Me ahorra horas de leer Twitter y blogs. En 5 minutos sé todo lo relevante de la semana."</p>
-      <div class="testi-author">Carlos M. · Autónomo</div>
-    </div>
-    <div class="testi">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">"El análisis de herramientas es increíblemente útil. Ya he cambiado mi flujo de trabajo gracias a varios artículos."</p>
-      <div class="testi-author">Laura P. · Diseñadora</div>
-    </div>
-  </div>
-</div>
+    <footer class="footer">
+        <p>© 2026 NoticiasIA. La IA no espera.</p>
+    </footer>
 
-<!-- CTA FINAL -->
-<div class="cta-bottom">
-  <h2>La IA no espera.<br>Tú tampoco deberías.</h2>
-  <p>Primera semana gratis. Sin tarjeta. Sin compromiso.</p>
-  <button class="btn btn-accent" style="font-size:15px;padding:13px 32px" onclick="showPaywall()">Empezar ahora →</button>
-</div>
+    <!-- Script para cargar las noticias desde el feed RSS de Xataka IA -->
+    <script>
+        async function cargarNoticias() {
+            try {
+                // Usamos un proxy CORS para evitar problemas
+                const proxyUrl = "https://api.allorigins.win/get?url=";
+                const feedUrl = "https://www.xataka.com/tag/ia/feed";
+                const response = await fetch(proxyUrl + encodeURIComponent(feedUrl));
+                const data = await response.json();
 
-<footer>
-  <span>© 2025 NoticiasIA</span>
-  <span>Privacidad · Términos · Contacto</span>
-</footer>
+                // Parsear el contenido XML del feed RSS
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(data.contents, "text/xml");
+                const items = xmlDoc.getElementsByTagName("item");
 
-<script>
-const STRIPE_KEY='pk_live_51TkUIQA25LaZKjnKrdaB5JdgJ3MKsSbHiHKLxOyiZM3c8Jmgx3mLt84MPrLfeUfemVxY1Q6swOJjb3QBSWxktyWi00fJK06Pq0';
-const API_URL='https://intelibrief-backend.onrender.com';
-const stripe=Stripe(STRIPE_KEY);
+                const noticias = [];
+                for (let i = 0; i < items.length; i++) {
+                    const item = items[i];
+                    const titulo = item.getElementsByTagName("title")[0].textContent;
+                    const descripcion = item.getElementsByTagName("description")[0].textContent;
+                    const link = item.getElementsByTagName("link")[0].textContent;
+                    const pubDate = item.getElementsByTagName("pubDate")[0].textContent;
 
-const ARTICLES=[
-  {
-    title:'ChatGPT, Gemini o Claude: ¿cuál te conviene usar en 2026?',
-    prompt:'Escribe un análisis periodístico de 350 palabras en español comparando ChatGPT, Gemini y Claude como asistentes de IA para uso cotidiano en 2026. Para cada uno: puntos fuertes, puntos débiles y para quién es ideal. Tono directo y honesto, sin publicidad. Sin asteriscos ni markdown, solo párrafos de texto plano.'
-  },
-  {
-    title:'5 tareas del trabajo que ya puedes automatizar con IA hoy mismo',
-    prompt:'Escribe un artículo práctico de 350 palabras en español sobre 5 tareas laborales cotidianas que se pueden automatizar con herramientas de IA gratuitas en 2026. Para cada tarea: qué herramienta usar y cómo. Tono práctico y directo. Sin asteriscos ni markdown, solo párrafos de texto plano.'
-  }
-];
+                    noticias.push({
+                        title: titulo,
+                        description: descripcion,
+                        link: link,
+                        pubDate: pubDate
+                    });
+                }
 
-let currentIdx=null;
+                // Filtrar noticias que contengan palabras clave de IA
+                const noticiasFiltradas = noticias
+                    .filter(noticia => {
+                        const titulo = noticia.title.toLowerCase();
+                        return titulo.includes("ia") ||
+                               titulo.includes("inteligencia artificial") ||
+                               titulo.includes("mistral") ||
+                               titulo.includes("claude") ||
+                               titulo.includes("gemini") ||
+                               titulo.includes("chatgpt") ||
+                               titulo.includes("anthropic");
+                    })
+                    .slice(0, 10); // Mostrar solo las 10 primeras noticias filtradas
 
-function openArticle(idx){
-  currentIdx=idx;
-  const a=ARTICLES[idx];
-  const r=document.getElementById('reader');
-  document.getElementById('paywall').style.display='none';
-  r.style.display='block';
-  document.getElementById('reader-title').textContent=a.title;
-  document.getElementById('reader-body').textContent='';
-  document.getElementById('spin').style.display='inline-block';
-  document.getElementById('ai-badge-text').textContent='Generando con IA...';
-  r.scrollIntoView({behavior:'smooth',block:'start'});
-  fetchArticle(a.prompt);
-}
+                const container = document.getElementById('noticias-container');
+                container.innerHTML = '';
 
-async function fetchArticle(prompt){
-  try{
-    const res=await fetch(API_URL+'/article',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({prompt})
-    });
-    const d=await res.json();
-    const text=d.text||'Error al generar el contenido.';
-    document.getElementById('reader-body').textContent=text;
-    document.getElementById('spin').style.display='none';
-    document.getElementById('ai-badge-text').textContent='✓ Generado · '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
-  }catch(e){
-    document.getElementById('reader-body').textContent='Error de conexión. Por favor inténtalo de nuevo.';
-    document.getElementById('spin').style.display='none';
-    document.getElementById('ai-badge-text').textContent='Error';
-  }
-}
+                noticiasFiltradas.forEach((noticia, index) => {
+                    const tipo = index < 2 ? "Gratis" : "Pro";
+                    const icono = tipo === "Pro" ? "🔒" : "✓";
+                    const badgeClass = tipo === "Pro" ? "pro-badge" : "free-badge";
 
-function regenArticle(){if(currentIdx!==null)openArticle(currentIdx);}
-function closeReader(){document.getElementById('reader').style.display='none';}
+                    // Formatear fecha
+                    const fecha = new Date(noticia.pubDate);
+                    const hoy = new Date();
+                    const diffDias = Math.floor((hoy - fecha) / (1000 * 60 * 60 * 24));
+                    const fechaTexto = diffDias === 0 ? "Hoy" : `Hace ${diffDias} día${diffDias !== 1 ? 's' : ''}`;
 
-function showPaywall(){
-  document.getElementById('reader').style.display='none';
-  const pw=document.getElementById('paywall');
-  pw.style.display='block';
-  pw.scrollIntoView({behavior:'smooth',block:'start'});
-}
-function hidePaywall(){document.getElementById('paywall').style.display='none';}
+                    const publication = document.createElement('div');
+                    publication.className = 'publication';
+                    publication.innerHTML = `
+                        <div class="publication-icon">${icono}</div>
+                        <div class="publication-content">
+                            <div class="publication-meta">
+                                <span class="${badgeClass}">${tipo}</span>
+                                <span>${fechaTexto}</span>
+                                <span>· 5 min de lectura</span>
+                            </div>
+                            <h3 class="noticia-titulo" data-url="${noticia.link}" data-index="${index}">${noticia.title}</h3>
+                            <p>${noticia.description ? noticia.description.substring(0, 100) + '...' : 'Leer más...'}</p>
+                        </div>
+                    `;
+                    container.appendChild(publication);
+                });
 
-async function checkout(priceId){
-  try{
-    const res=await fetch(API_URL+'/create-checkout',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({priceId})
-    });
-    const {sessionId}=await res.json();
-    await stripe.redirectToCheckout({sessionId});
-  }catch(e){
-    alert('Error al conectar con el sistema de pago. Por favor inténtalo de nuevo.');
-  }
-}
+                // Añadir evento de clic a los títulos
+                document.querySelectorAll('.noticia-titulo').forEach(titulo => {
+                    titulo.addEventListener('click', () => {
+                        const url = titulo.getAttribute('data-url');
+                        const index = parseInt(titulo.getAttribute('data-index'));
+                        const esPro = index >= 2;
 
-if(window.location.search.includes('success=true')){
-  document.getElementById('success-bar').style.display='block';
-  window.scrollTo(0,0);
-}
-</script>
+                        if (esPro) {
+                            alert('Esta noticia es solo para suscriptores. Suscríbete para acceder al contenido completo.');
+                        } else {
+                            window.open(url, '_blank');
+                        }
+                    });
+                });
+
+            } catch (error) {
+                console.error('Error al cargar las noticias:', error);
+                // Mensaje temporal hasta que la página esté desplegada en Vercel
+                document.getElementById('noticias-container').innerHTML = '<p style="text-align: center; color: var(--ink3);">Las noticias se cargarán automáticamente cuando la página esté activa en Vercel.</p>';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', cargarNoticias);
+    </script>
+
+    <!-- Script para Stripe y PayPal -->
+    <script>
+        // Configuración de Stripe
+        const stripe = Stripe('pk_test_TU_CLAVE_PUBLICA_STRIPE'); // Reemplaza con tu clave pública de Stripe
+
+        // Configuración de PayPal
+        const planSeleccionado = { nombre: '', precio: 0, trialDays: 0 };
+
+        // Inicializar Stripe Elements
+        let cardElement;
+        let stripeElements;
+
+        function inicializarStripe() {
+            stripeElements = stripe.elements();
+            cardElement = stripeElements.create('card');
+            cardElement.mount('#card-element');
+        }
+
+        // Función para seleccionar un plan
+        function seleccionarPlan(plan) {
+            if (plan === 'basico') {
+                planSeleccionado.nombre = 'Básico';
+                planSeleccionado.precio = 700; // 7€ en céntimos
+                planSeleccionado.trialDays = 7;
+            } else if (plan === 'pro') {
+                planSeleccionado.nombre = 'Pro';
+                planSeleccionado.precio = 1200; // 12€ en céntimos
+                planSeleccionado.trialDays = 14;
+            }
+
+            // Mostrar el formulario de pago
+            document.getElementById('payment-form-container').style.display = 'block';
+            document.getElementById('payment-title').textContent = `Suscripción al plan ${planSeleccionado.nombre} (${planSeleccionado.precio / 100}€/mes)`;
+
+            // Inicializar Stripe
+            inicializarStripe();
+
+            // Inicializar PayPal
+            inicializarPayPal();
+        }
+
+        // Función para inicializar PayPal
+        function inicializarPayPal() {
+            // Limpiar el contenedor de PayPal
+            document.getElementById('paypal-button-container').innerHTML = '';
+
+            // Crear el botón de PayPal
+            paypal.Buttons({
+                style: {
+                    layout: 'vertical',
+                    color:  'gold',
+                    shape:  'rect',
+                    label:  'paypal'
+                },
+                createSubscription: function(data, actions) {
+                    return actions.subscription.create({
+                        plan_id: planSeleccionado.nombre === 'Básico' ? 'P-123456789' : 'P-987654321', // Reemplaza con tus IDs de plan de PayPal
+                        start_time: new Date(Date.now() + planSeleccionado.trialDays * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T00:00:00Z'
+                    });
+                },
+                onApprove: function(data, actions) {
+                    // Suscripción creada con éxito
+                    alert(`¡Suscripción al plan ${planSeleccionado.nombre} creada con éxito!`);
+                    localStorage.setItem('suscripcion_activa', 'true');
+                    localStorage.setItem('plan_suscripcion', planSeleccionado.nombre);
+                    location.reload();
+                }
+            }).render('#paypal-button-container');
+        }
+
+        // Manejar el envío del formulario de Stripe
+        document.getElementById('payment-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const name = document.getElementById('name').value;
+
+            try {
+                // Crear un PaymentMethod en Stripe
+                const { error, paymentMethod } = await stripe.createPaymentMethod({
+                    type: 'card',
+                    card: cardElement,
+                    billing_details: {
+                        email: email,
+                        name: name,
+                    },
+                });
+
+                if (error) {
+                    alert(error.message);
+                    return;
+                }
+
+                // Usar Stripe Checkout (recomendado si no tienes backend)
+                const { error: checkoutError } = await stripe.redirectToCheckout({
+                    lineItems: [{
+                        price: planSeleccionado.nombre === 'Básico' ? 'price_123' : 'price_456', // Reemplaza con tus IDs de precio de Stripe
+                        quantity: 1,
+                    }],
+                    mode: 'subscription',
+                    successUrl: window.location.origin + '?success=true',
+                    cancelUrl: window.location.origin + '?canceled=true',
+                    customerEmail: email,
+                    trial_period_days: planSeleccionado.trialDays,
+                });
+
+                if (checkoutError) {
+                    alert(checkoutError.message);
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al procesar el pago.');
+            }
+        });
+
+        // Verificar si el usuario ya está suscrito (simulación)
+        function esUsuarioSuscrito() {
+            return localStorage.getItem('suscripcion_activa') === 'true';
+        }
+
+        // Verificar si hay parámetros de éxito/cancelación en la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success') === 'true') {
+            localStorage.setItem('suscripcion_activa', 'true');
+            localStorage.setItem('plan_suscripcion', 'Pro'); // Ajusta según el plan
+            alert('¡Suscripción exitosa! Ahora tienes acceso a todo el contenido Pro.');
+            window.history.replaceState({}, document.title, window.location.pathname); // Limpiar parámetros de la URL
+        } else if (urlParams.get('canceled') === 'true') {
+            alert('Pago cancelado. Puedes intentar de nuevo cuando quieras.');
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+
+        // Verificar suscripción al cargar la página
+        if (esUsuarioSuscrito()) {
+            const plan = localStorage.getItem('plan_suscripcion');
+            document.getElementById('suscripcion').innerHTML = `
+                <h2>¡Ya estás suscrito al plan ${plan}!</h2>
+                <p>Gracias por tu apoyo. Ahora tienes acceso a todo el contenido Pro.</p>
+                <a href="#" class="cta-button" onclick="cancelarSuscripcion()">Gestionar suscripción</a>
+            `;
+        }
+    </script>
 </body>
 </html>
