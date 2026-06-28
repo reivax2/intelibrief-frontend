@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- Los metadatos y estilos siguen igual -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NoticiasIA — IA sin filtros, cada semana</title>
-    <meta name="description" content="Análisis semanales de inteligencia artificial en español, sin tecnicismos. Para profesionales ocupados.">
+    <meta name="description" content="Lo que pasa en inteligencia artificial esta semana, explicado en 5 minutos. Sin jerga, sin hype. Análisis honesto para personas ocupadas.">
 
+    <!-- Open Graph Tags -->
     <meta property="og:title" content="NoticiasIA — IA sin filtros, cada semana">
     <meta property="og:description" content="Análisis semanal de inteligencia artificial para profesionales ocupados.">
     <meta property="og:image" content="https://actualidad-dela-ia.vercel.app/og-image.jpg">
     <meta property="og:url" content="https://actualidad-dela-ia.vercel.app/">
 
+    <!-- Fuentes de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+    <!-- Stripe JS -->
     <script src="https://js.stripe.com/v3/"></script>
+    <!-- PayPal JS -->
     <script src="https://www.paypal.com/sdk/js?client-id=TU_CLIENT_ID_PAYPAL&currency=EUR"></script>
 
     <style>
-        /* Los estilos siguen igual */
         :root {
             --ink: #0f0f0f;
             --ink2: #3a3a3a;
@@ -28,15 +31,15 @@
             --paper3: #e8e8e2;
             --accent: #d4500a;
             --accent-light: #fdf1ea;
+            --blue: #1a5fa8;
+            --blue-light: #eaf1fb;
             --green: #1a6b3a;
             --green-light: #eaf5ef;
             --border: rgba(0, 0, 0, 0.09);
             --r: 8px;
         }
 
-        *,
-        *::before,
-        *::after {
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -54,6 +57,7 @@
             font-size: 15px;
         }
 
+        /* Ticker */
         .ticker-wrap {
             background: var(--ink);
             color: #fff;
@@ -88,12 +92,14 @@
             margin-right: 8px;
         }
 
+        /* Contenedor principal */
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 40px 24px;
         }
 
+        /* Encabezado */
         header {
             text-align: center;
             margin-bottom: 40px;
@@ -109,39 +115,9 @@
         header p {
             color: var(--ink2);
             font-size: 18px;
-            margin-bottom: 20px;
         }
 
-        .header-cta {
-            margin-top: 20px;
-        }
-
-        .cta-button {
-            background: var(--accent);
-            color: white;
-            padding: 14px 28px;
-            border-radius: var(--r);
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            margin: 10px 5px;
-            text-align: center;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.2s;
-        }
-
-        .cta-button:hover {
-            background: #b84509;
-        }
-
-        .cta-button-secondary {
-            background: var(--paper3);
-            color: var(--ink);
-            border: 1px solid var(--border);
-        }
-
+        /* Sección "Por qué NoticiasIA" */
         .why-section {
             background: var(--paper2);
             padding: 40px;
@@ -181,6 +157,7 @@
             font-weight: 600;
         }
 
+        /* Testimonios */
         .testimonials {
             margin-top: 40px;
         }
@@ -229,6 +206,33 @@
             font-weight: 600;
         }
 
+        /* Botón CTA */
+        .cta-button {
+            background: var(--accent);
+            color: white;
+            padding: 14px 28px;
+            border-radius: var(--r);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 5px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .cta-button:hover {
+            background: #b84509;
+        }
+
+        .cta-button-secondary {
+            background: var(--paper3);
+            color: var(--ink);
+            border: 1px solid var(--border);
+        }
+
+        /* Sección de publicaciones */
         .publications-section {
             margin: 60px 0;
         }
@@ -245,6 +249,7 @@
             margin-bottom: 30px;
         }
 
+        /* Estilos para las noticias */
         .publication {
             background: white;
             padding: 20px;
@@ -252,6 +257,7 @@
             border-radius: var(--r);
             border: 1px solid var(--border);
             display: flex;
+            transition: box-shadow 0.2s;
         }
 
         .publication:hover {
@@ -350,15 +356,7 @@
             color: var(--ink2);
         }
 
-        .modal-footer {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border);
-            text-align: center;
-            font-style: italic;
-            color: var(--ink3);
-        }
-
+        /* Sección de suscripción */
         .subscription-section {
             text-align: center;
             margin: 60px 0;
@@ -458,26 +456,48 @@
             font-size: 14px;
         }
 
-        @media (max-width: 768px) {
-            .ticker-text {
-                font-size: 11px !important;
-            }
-            .pricing-plans {
-                flex-direction: column !important;
-                align-items: center;
-            }
-            .plan {
-                width: 90% !important;
-                margin-bottom: 20px !important;
-            }
-            .cta-button {
-                width: 100% !important;
-                margin: 10px 0 !important;
-            }
-            .modal-content {
-                width: 95% !important;
-                padding: 20px !important;
-            }
+        /* Estilos para Stripe y PayPal */
+        #card-element {
+            background: white;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            margin-bottom: 16px;
+        }
+
+        #payment-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        #payment-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            font-size: 16px;
+        }
+
+        #payment-form button {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--r);
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #payment-form button:hover {
+            background: #b84509;
+        }
+
+        /* PayPal Buttons */
+        #paypal-button-container {
+            margin: 20px 0;
         }
     </style>
 </head>
@@ -490,30 +510,12 @@
         </div>
     </div>
 
-    <!-- Modal para mostrar el contenido de las noticias -->
-    <div id="modal-noticia" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="cerrarModal()">&times;</span>
-            <h2 id="modal-titulo"></h2>
-            <div id="modal-contenido" class="modal-body"></div>
-            <div class="modal-footer">
-                Para más información, suscríbete ahora.
-            </div>
-        </div>
-    </div>
-
     <div class="container">
-        <!-- Encabezado con CTA -->
         <header>
             <h1>NoticiasIA</h1>
             <p>IA sin filtros, cada semana</p>
-            <p>Análisis semanales de inteligencia artificial en español, sin tecnicismos. Para profesionales ocupados.</p>
-            <div class="header-cta">
-                <a href="#suscripcion" class="cta-button">Suscríbete con 14 días gratis →</a>
-            </div>
         </header>
 
-        <!-- Sección "Por qué NoticiasIA" -->
         <section class="why-section">
             <h2>Por qué NoticiasIA</h2>
             <p><strong>Lo que no encontrarás en los medios generalistas ni en los blogs técnicos.</strong></p>
@@ -550,7 +552,6 @@
                 </div>
             </div>
 
-            <!-- Testimonios -->
             <div class="testimonials">
                 <h3>Lo que dicen los lectores</h3>
 
@@ -578,85 +579,21 @@
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Sección de últimas publicaciones -->
-        <section class="publications-section">
-            <h2>Últimas publicaciones</h2>
-            <p class="intro">Noticias de IA en español, actualizadas cada 48 horas.</p>
-            <div id="noticias-container">
-                <!-- Noticia 1: Gratis -->
-                <div class="publication">
-                    <div class="publication-icon">✓</div>
-                    <div class="publication-content">
-                        <div class="publication-meta">
-                            <span class="free-badge">Gratis</span>
-                            <span>Hoy</span>
-                            <span>· 5 min de lectura</span>
-                        </div>
-                        <h3 class="noticia-titulo" onclick="abrirModal(
-                            'Trump aprueba el uso de Claude de Anthropic: ¿Qué significa para la IA?',
-                            '<p><strong>La administración de Donald Trump ha dado un giro inesperado en su postura sobre la inteligencia artificial.</strong></p>' +
-                            '<p>Tras meses de tensiones con empresas tecnológicas como Anthropic, el gobierno estadounidense ha decidido <strong>levantar el bloqueo</strong> que pesaba sobre el modelo de lenguaje Claude y su nueva versión, Mythos 5. Esta decisión llega en un momento crítico, donde la competencia en el sector de la IA se ha intensificado con el lanzamiento de nuevos modelos por parte de empresas como Mistral AI, Google y Meta.</p>' +
-                            '<p><strong>¿Por qué este cambio de postura?</strong></p>' +
-                            '<p>Según fuentes cercanas a la Casa Blanca, la decisión responde a la necesidad de <strong>no quedarse atrás en la carrera tecnológica</strong>. \"No podemos permitir que regulaciones demasiado estrictas ahoguen la innovación en un sector donde Estados Unidos ha sido siempre líder\", declaró un portavoz de la administración.</p>' +
-                            '<p>El modelo Claude de Anthropic, especialmente su versión Mythos 5, ha sido objeto de controversia debido a su capacidad para generar texto indistinguible del humano, lo que ha generado preocupaciones sobre su uso en desinformación y manipulación. Sin embargo, la empresa ha trabajado estrechamente con el gobierno para implementar <strong>medidas de seguridad robustas</strong>, incluyendo filtros de contenido y auditorías independientes.</p>' +
-                            '<p><strong>Reacciones en el sector</strong></p>' +
-                            '<p>La noticia ha sido recibida con alivio por parte de los desarrolladores y empresas que utilizan herramientas de IA en sus operaciones diarias. \"Es un paso en la dirección correcta\", comentó un ejecutivo de una startup de Silicon Valley. \"La IA es una herramienta poderosa, pero necesitamos regulaciones que equilibren la innovación con la protección de los ciudadanos\".</p>' +
-                            '<p>Mientras tanto, empresas como Mistral AI y Google continúan avanzando en el desarrollo de sus propios modelos, lo que promete una <strong>nueva era de competencia</strong> en el sector de la inteligencia artificial.</p>'
-                        )">
-                            Trump aprueba el uso de Claude de Anthropic: ¿Qué significa para la IA?
-                        </h3>
-                        <p>El presidente Trump ha autorizado el uso de Claude en proyectos gubernamentales. Analizamos las implicaciones políticas y tecnológicas de esta decisión histórica.</p>
-                    </div>
-                </div>
-
-                <!-- Noticia 2: Gratis -->
-                <div class="publication">
-                    <div class="publication-icon">✓</div>
-                    <div class="publication-content">
-                        <div class="publication-meta">
-                            <span class="free-badge">Gratis</span>
-                            <span>Ayer</span>
-                            <span>· 6 min de lectura</span>
-                        </div>
-                        <h3 class="noticia-titulo" onclick="abrirModal(
-                            'Mistral AI lanza su nuevo modelo 3.5: más rápido y preciso que nunca',
-                            '<p><strong>Mistral AI ha dado un paso gigante en el mundo de la inteligencia artificial</strong> con el lanzamiento de su nuevo modelo 3.5, que promete revolucionar la forma en que interactuamos con las máquinas.</p>' +
-                            '<p>Este nuevo modelo no solo es <strong>un 20% más rápido</strong> que su predecesor, sino que también ofrece una precisión sin precedentes en tareas complejas como la generación de código, la traducción automática y el análisis de datos masivos. Lo más impresionante es su capacidad para <strong>procesar y entender textos de hasta 128.000 tokens</strong>, lo que equivale a aproximadamente 100.000 palabras, superando a la mayoría de los modelos actuales.</p>' +
-                            '<p><strong>¿Qué lo hace diferente?</strong></p>' +
-                            '<p>Una de las mayores innovaciones de Mistral AI 3.5 es su <strong>eficiencia energética</strong>. Según la empresa, este modelo consume un 30% menos de energía que los modelos anteriores, lo que lo hace más accesible para empresas de todos los tamaños. Además, su arquitectura optimizada permite que funcione en <strong>dispositivos con menos recursos</strong>, abriendo la puerta a nuevas aplicaciones en móviles y dispositivos IoT.</p>' +
-                            '<p><strong>Impacto en el mercado</strong></p>' +
-                            '<p>El lanzamiento de Mistral AI 3.5 llega en un momento en que la competencia en el sector de la IA es más feroz que nunca. Con gigantes como Google, Meta y OpenAI compitiendo por el dominio del mercado, Mistral AI ha logrado posicionarse como una alternativa seria, especialmente en Europa, donde su enfoque en la <strong>privacidad y el cumplimiento normativo</strong> ha sido muy bien recibido.</p>' +
-                            '<p>Los primeros usuarios que han tenido acceso al modelo han destacado su capacidad para <strong>generar respuestas más coherentes y contextualizadas</strong>, incluso en conversaciones largas y complejas. \"Es como hablar con un experto en el tema\", comentó un desarrollador que probó el modelo en su fase beta.</p>' +
-                            '<p><strong>¿Qué sigue?</strong></p>' +
-                            '<p>Mistral AI ya ha anunciado que está trabajando en la siguiente versión, que incluirá mejoras en la comprensión multimodal, permitiendo no solo procesar texto, sino también imágenes y audio. Esto podría abrir nuevas posibilidades en campos como el diagnóstico médico, el análisis de videos y la creación de contenido multimedia.</p>'
-                        )">
-                            Mistral AI lanza su nuevo modelo 3.5: más rápido y preciso que nunca
-                        </h3>
-                        <p>El nuevo modelo de Mistral supera a sus competidores en velocidad y precisión. Te contamos todas las novedades y cómo afectan a los desarrolladores.</p>
-                    </div>
-                </div>
-
-                <!-- Noticia 3: Pro -->
-                <div class="publication">
-                    <div class="publication-icon">🔒</div>
-                    <div class="publication-content">
-                        <div class="publication-meta">
-                            <span class="pro-badge">Pro</span>
-                            <span>Hace 2 días</span>
-                            <span>· 7 min de lectura</span>
-                        </div>
-                        <h3 class="noticia-titulo" onclick="alert('Esta noticia es solo para suscriptores. Suscríbete para acceder al contenido completo.')">
-                            Cómo usar la IA para automatizar tareas en tu empresa (guía práctica)
-                        </h3>
-                        <p>Descubre las herramientas de IA más útiles para automatizar procesos en tu negocio, desde atención al cliente hasta generación de informes.</p>
-                    </div>
-                </div>
+            <div style="text-align: center;">
+                <p><strong>Únete a +300 profesionales que ya lo leen</strong></p>
+                <a href="#suscripcion" class="cta-button">Ver planes de suscripción</a>
             </div>
         </section>
 
-        <!-- Sección de suscripción -->
+        <section class="publications-section">
+            <h2>Últimas publicaciones</h2>
+            <p class="intro">Noticias de IA en español, actualizadas automáticamente cada 48 horas.</p>
+            <div id="noticias-container">
+                <p style="text-align: center; color: var(--ink3);">Cargando noticias... Si no se muestran, la página se actualizará automáticamente al desplegarse en Vercel.</p>
+            </div>
+        </section>
+
         <section id="suscripcion" class="subscription-section">
             <h2>Planes de suscripción</h2>
             <p>Elige el plan que mejor se adapte a ti. Cancela cuando quieras.</p>
@@ -696,7 +633,7 @@
                 <form id="payment-form">
                     <input type="email" id="email" placeholder="Tu email" required>
                     <input type="text" id="name" placeholder="Tu nombre" required>
-                    <div id="card-element"></div>
+                    <div id="card-element"><!-- Stripe insertará el formulario de tarjeta aquí --></div>
                     <div id="paypal-button-container"></div>
                     <button type="submit" id="submit-button">Completar suscripción</button>
                 </form>
@@ -711,28 +648,109 @@
         <p>© 2026 NoticiasIA. La IA no espera.</p>
     </footer>
 
-    <!-- Script para el modal y Stripe/PayPal -->
+    <!-- Script para cargar las noticias desde el feed RSS de Xataka IA -->
     <script>
-        // Función para abrir el modal con el contenido de la noticia
-        function abrirModal(titulo, contenido) {
-            document.getElementById('modal-titulo').textContent = titulo;
-            document.getElementById('modal-contenido').innerHTML = contenido;
-            document.getElementById('modal-noticia').style.display = 'block';
-        }
+        async function cargarNoticias() {
+            try {
+                // Usamos un proxy CORS para evitar problemas
+                const proxyUrl = "https://api.allorigins.win/get?url=";
+                const feedUrl = "https://www.xataka.com/tag/ia/feed";
+                const response = await fetch(proxyUrl + encodeURIComponent(feedUrl));
+                const data = await response.json();
 
-        // Función para cerrar el modal
-        function cerrarModal() {
-            document.getElementById('modal-noticia').style.display = 'none';
-        }
+                // Parsear el contenido XML del feed RSS
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(data.contents, "text/xml");
+                const items = xmlDoc.getElementsByTagName("item");
 
-        // Cerrar el modal al hacer clic fuera de él
-        window.onclick = function(event) {
-            const modal = document.getElementById('modal-noticia');
-            if (event.target === modal) {
-                cerrarModal();
+                const noticias = [];
+                for (let i = 0; i < items.length; i++) {
+                    const item = items[i];
+                    const titulo = item.getElementsByTagName("title")[0].textContent;
+                    const descripcion = item.getElementsByTagName("description")[0].textContent;
+                    const link = item.getElementsByTagName("link")[0].textContent;
+                    const pubDate = item.getElementsByTagName("pubDate")[0].textContent;
+
+                    noticias.push({
+                        title: titulo,
+                        description: descripcion,
+                        link: link,
+                        pubDate: pubDate
+                    });
+                }
+
+                // Filtrar noticias que contengan palabras clave de IA
+                const noticiasFiltradas = noticias
+                    .filter(noticia => {
+                        const titulo = noticia.title.toLowerCase();
+                        return titulo.includes("ia") ||
+                               titulo.includes("inteligencia artificial") ||
+                               titulo.includes("mistral") ||
+                               titulo.includes("claude") ||
+                               titulo.includes("gemini") ||
+                               titulo.includes("chatgpt") ||
+                               titulo.includes("anthropic");
+                    })
+                    .slice(0, 10); // Mostrar solo las 10 primeras noticias filtradas
+
+                const container = document.getElementById('noticias-container');
+                container.innerHTML = '';
+
+                noticiasFiltradas.forEach((noticia, index) => {
+                    const tipo = index < 2 ? "Gratis" : "Pro";
+                    const icono = tipo === "Pro" ? "🔒" : "✓";
+                    const badgeClass = tipo === "Pro" ? "pro-badge" : "free-badge";
+
+                    // Formatear fecha
+                    const fecha = new Date(noticia.pubDate);
+                    const hoy = new Date();
+                    const diffDias = Math.floor((hoy - fecha) / (1000 * 60 * 60 * 24));
+                    const fechaTexto = diffDias === 0 ? "Hoy" : `Hace ${diffDias} día${diffDias !== 1 ? 's' : ''}`;
+
+                    const publication = document.createElement('div');
+                    publication.className = 'publication';
+                    publication.innerHTML = `
+                        <div class="publication-icon">${icono}</div>
+                        <div class="publication-content">
+                            <div class="publication-meta">
+                                <span class="${badgeClass}">${tipo}</span>
+                                <span>${fechaTexto}</span>
+                                <span>· 5 min de lectura</span>
+                            </div>
+                            <h3 class="noticia-titulo" data-url="${noticia.link}" data-index="${index}">${noticia.title}</h3>
+                            <p>${noticia.description ? noticia.description.substring(0, 100) + '...' : 'Leer más...'}</p>
+                        </div>
+                    `;
+                    container.appendChild(publication);
+                });
+
+                // Añadir evento de clic a los títulos
+                document.querySelectorAll('.noticia-titulo').forEach(titulo => {
+                    titulo.addEventListener('click', () => {
+                        const url = titulo.getAttribute('data-url');
+                        const index = parseInt(titulo.getAttribute('data-index'));
+                        const esPro = index >= 2;
+
+                        if (esPro) {
+                            alert('Esta noticia es solo para suscriptores. Suscríbete para acceder al contenido completo.');
+                        } else {
+                            window.open(url, '_blank');
+                        }
+                    });
+                });
+
+            } catch (error) {
+                console.error('Error al cargar las noticias:', error);
+                // Mensaje temporal hasta que la página esté desplegada en Vercel
+                document.getElementById('noticias-container').innerHTML = '<p style="text-align: center; color: var(--ink3);">Accede al archivo con los últimos análisis detallados y no te pierdas ninguna actualización del sector..</p>';
             }
         }
 
+        window.addEventListener('DOMContentLoaded', cargarNoticias);
+    </script>
+
+    <!-- Script para Stripe y PayPal -->
+    <script>
         // Configuración de Stripe
         const stripe = Stripe('pk_test_TU_CLAVE_PUBLICA_STRIPE'); // Reemplaza con tu clave pública de Stripe
 
@@ -792,6 +810,7 @@
                     });
                 },
                 onApprove: function(data, actions) {
+                    // Suscripción creada con éxito
                     alert(`¡Suscripción al plan ${planSeleccionado.nombre} creada con éxito!`);
                     localStorage.setItem('suscripcion_activa', 'true');
                     localStorage.setItem('plan_suscripcion', planSeleccionado.nombre);
@@ -808,6 +827,7 @@
             const name = document.getElementById('name').value;
 
             try {
+                // Crear un PaymentMethod en Stripe
                 const { error, paymentMethod } = await stripe.createPaymentMethod({
                     type: 'card',
                     card: cardElement,
@@ -854,9 +874,9 @@
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('success') === 'true') {
             localStorage.setItem('suscripcion_activa', 'true');
-            localStorage.setItem('plan_suscripcion', 'Pro');
+            localStorage.setItem('plan_suscripcion', 'Pro'); // Ajusta según el plan
             alert('¡Suscripción exitosa! Ahora tienes acceso a todo el contenido Pro.');
-            window.history.replaceState({}, document.title, window.location.pathname);
+            window.history.replaceState({}, document.title, window.location.pathname); // Limpiar parámetros de la URL
         } else if (urlParams.get('canceled') === 'true') {
             alert('Pago cancelado. Puedes intentar de nuevo cuando quieras.');
             window.history.replaceState({}, document.title, window.location.pathname);
