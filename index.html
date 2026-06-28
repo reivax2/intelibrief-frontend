@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- El head sigue igual -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NoticiasIA — IA sin filtros, cada semana</title>
-    <meta name="description" content="Lo que pasa en inteligencia artificial esta semana, explicado en 5 minutos. Sin jerga, sin hype. Análisis honesto para personas ocupadas.">
+    <meta name="description" content="Análisis semanales de inteligencia artificial en español, sin tecnicismos. Para profesionales ocupados.">
 
     <!-- Open Graph Tags -->
     <meta property="og:title" content="NoticiasIA — IA sin filtros, cada semana">
@@ -23,7 +22,6 @@
     <script src="https://www.paypal.com/sdk/js?client-id=TU_CLIENT_ID_PAYPAL&currency=EUR"></script>
 
     <style>
-        /* Los estilos siguen igual */
         :root {
             --ink: #0f0f0f;
             --ink2: #3a3a3a;
@@ -33,14 +31,412 @@
             --paper3: #e8e8e2;
             --accent: #d4500a;
             --accent-light: #fdf1ea;
-            --blue: #1a5fa8;
-            --blue-light: #eaf1fb;
             --green: #1a6b3a;
             --green-light: #eaf5ef;
             --border: rgba(0, 0, 0, 0.09);
             --r: 8px;
         }
-        /* ... (el resto de los estilos sigue igual) ... */
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--ink);
+            background: var(--paper);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* Ticker */
+        .ticker-wrap {
+            background: var(--ink);
+            color: #fff;
+            padding: 8px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 30s linear infinite;
+        }
+
+        .ticker-content:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .ticker-text {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            padding: 0 40px;
+        }
+
+        .ticker-text span {
+            color: var(--accent);
+            margin-right: 8px;
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Encabezado */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 36px;
+            margin-bottom: 8px;
+            color: var(--ink);
+        }
+
+        header p {
+            color: var(--ink2);
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .header-cta {
+            margin-top: 20px;
+        }
+
+        /* Botón CTA */
+        .cta-button {
+            background: var(--accent);
+            color: white;
+            padding: 14px 28px;
+            border-radius: var(--r);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 5px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+
+        .cta-button:hover {
+            background: #b84509;
+        }
+
+        .cta-button-secondary {
+            background: var(--paper3);
+            color: var(--ink);
+            border: 1px solid var(--border);
+        }
+
+        /* Sección "Por qué NoticiasIA" */
+        .why-section {
+            background: var(--paper2);
+            padding: 40px;
+            border-radius: var(--r);
+            margin: 40px 0;
+        }
+
+        .why-section h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--ink);
+        }
+
+        .why-section p {
+            margin-bottom: 16px;
+            color: var(--ink2);
+        }
+
+        .why-section .feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .why-section .feature-icon {
+            font-size: 20px;
+            margin-right: 12px;
+        }
+
+        .why-section .feature-text {
+            flex: 1;
+        }
+
+        .why-section .feature-text strong {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        /* Testimonios */
+        .testimonials {
+            margin-top: 40px;
+        }
+
+        .testimonials h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--ink);
+        }
+
+        .testimonial {
+            background: var(--paper3);
+            padding: 20px;
+            border-radius: var(--r);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .testimonial .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 16px;
+            background: var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .testimonial-content {
+            flex: 1;
+        }
+
+        .testimonial-content p {
+            font-style: italic;
+            margin-bottom: 8px;
+            color: var(--ink2);
+        }
+
+        .testimonial-content strong {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        /* Sección de publicaciones */
+        .publications-section {
+            margin: 60px 0;
+        }
+
+        .publications-section h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--ink);
+        }
+
+        .publications-section p.intro {
+            color: var(--ink2);
+            margin-bottom: 30px;
+        }
+
+        /* Estilos para las noticias */
+        .publication {
+            background: white;
+            padding: 20px;
+            margin-bottom: 16px;
+            border-radius: var(--r);
+            border: 1px solid var(--border);
+            display: flex;
+        }
+
+        .publication:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .publication-icon {
+            margin-right: 16px;
+            font-size: 20px;
+        }
+
+        .publication-content {
+            flex: 1;
+        }
+
+        .publication-content h3 {
+            margin-bottom: 8px;
+            cursor: pointer;
+            color: var(--ink);
+        }
+
+        .publication-content h3:hover {
+            color: var(--accent);
+        }
+
+        .publication-meta {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: var(--ink3);
+            margin-bottom: 8px;
+        }
+
+        .publication-meta span {
+            margin-right: 12px;
+        }
+
+        .pro-badge {
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .free-badge {
+            background: var(--green-light);
+            color: var(--green);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Sección de suscripción */
+        .subscription-section {
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .subscription-section h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 28px;
+            margin-bottom: 16px;
+            color: var(--ink);
+        }
+
+        .subscription-section p {
+            color: var(--ink2);
+            margin-bottom: 24px;
+        }
+
+        .pricing-plans {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .plan {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 24px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .plan.popular {
+            border-color: var(--accent);
+            position: relative;
+        }
+
+        .plan.popular::before {
+            content: "MÁS POPULAR";
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .plan h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: var(--ink);
+        }
+
+        .plan .price {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+
+        .plan .description {
+            color: var(--ink3);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .plan ul {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .plan ul li {
+            margin-bottom: 8px;
+            color: var(--ink2);
+            font-size: 14px;
+        }
+
+        .plan ul li::before {
+            content: "✓";
+            color: var(--green);
+            margin-right: 8px;
+        }
+
+        /* Pie de página */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--ink3);
+            font-size: 14px;
+        }
+
+        /* Adaptación a móvil */
+        @media (max-width: 768px) {
+            .ticker-text {
+                font-size: 11px !important;
+            }
+            .pricing-plans {
+                flex-direction: column !important;
+                align-items: center;
+            }
+            .plan {
+                width: 90% !important;
+                margin-bottom: 20px !important;
+            }
+            .cta-button {
+                width: 100% !important;
+                margin: 10px 0 !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -130,12 +526,12 @@
             </div>
         </section>
 
-        <!-- Sección de últimas publicaciones con noticias de ejemplo y enlaces directos -->
+        <!-- Sección de últimas publicaciones -->
         <section class="publications-section">
             <h2>Últimas publicaciones</h2>
             <p class="intro">Noticias de IA en español, actualizadas cada 48 horas.</p>
             <div id="noticias-container">
-                <!-- Noticia 1: Gratis -->
+                <!-- Noticias de ejemplo estáticas -->
                 <div class="publication">
                     <div class="publication-icon">✓</div>
                     <div class="publication-content">
@@ -150,8 +546,6 @@
                         <p>El presidente Trump ha autorizado el uso de Claude en proyectos gubernamentales. Analizamos las implicaciones políticas y tecnológicas de esta decisión histórica.</p>
                     </div>
                 </div>
-
-                <!-- Noticia 2: Gratis -->
                 <div class="publication">
                     <div class="publication-icon">✓</div>
                     <div class="publication-content">
@@ -166,8 +560,6 @@
                         <p>El nuevo modelo de Mistral supera a sus competidores en velocidad y precisión. Te contamos todas las novedades y cómo afectan a los desarrolladores.</p>
                     </div>
                 </div>
-
-                <!-- Noticia 3: Pro -->
                 <div class="publication">
                     <div class="publication-icon">🔒</div>
                     <div class="publication-content">
@@ -225,7 +617,7 @@
                 <form id="payment-form">
                     <input type="email" id="email" placeholder="Tu email" required>
                     <input type="text" id="name" placeholder="Tu nombre" required>
-                    <div id="card-element"><!-- Stripe insertará el formulario de tarjeta aquí --></div>
+                    <div id="card-element"></div>
                     <div id="paypal-button-container"></div>
                     <button type="submit" id="submit-button">Completar suscripción</button>
                 </form>
@@ -240,7 +632,7 @@
         <p>© 2026 NoticiasIA. La IA no espera.</p>
     </footer>
 
-    <!-- Script para cargar las noticias desde el feed RSS de Xataka IA -->
+    <!-- Script para cargar las noticias desde el feed RSS de Xataka IA (opcional) -->
     <script>
         // Función para cargar noticias desde el feed RSS (opcional)
         async function cargarNoticias() {
