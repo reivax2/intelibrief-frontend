@@ -361,6 +361,15 @@
             color: var(--ink2);
         }
 
+        .modal-cta {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            background: var(--paper2);
+            border-radius: var(--r);
+            border-top: 1px solid var(--border);
+        }
+
         /* Sección de suscripción */
         .subscription-section {
             text-align: center;
@@ -501,6 +510,11 @@
             <span class="close" onclick="cerrarModal()">&times;</span>
             <h2 id="modal-titulo"></h2>
             <div id="modal-contenido" class="modal-body"></div>
+            <div class="modal-cta">
+                <p><strong>¿Te gustó este análisis?</strong></p>
+                <p>Suscríbete ahora para acceder a <strong>8 artículos Pro semanales</strong> y no perderte ningún detalle sobre el mundo de la IA.</p>
+                <a href="#suscripcion" class="cta-button" onclick="cerrarModal(); document.getElementById('suscripcion').scrollIntoView();">Suscríbete con 14 días gratis →</a>
+            </div>
         </div>
     </div>
 
@@ -596,7 +610,17 @@
                             <span>Hoy</span>
                             <span>· 5 min de lectura</span>
                         </div>
-                        <h3 class="noticia-titulo" onclick="abrirModal('Trump aprueba el uso de Claude de Anthropic: ¿Qué significa para la IA?', 'El presidente Trump ha autorizado el uso de Claude en proyectos gubernamentales. Analizamos las implicaciones políticas y tecnológicas de esta decisión histórica. En este análisis, exploramos cómo esta decisión afectará a las empresas de IA en Europa y Estados Unidos, así como las posibles consecuencias para la regulación de la inteligencia artificial a nivel global.')">
+                        <h3 class="noticia-titulo" onclick="abrirModal(
+                            'Trump aprueba el uso de Claude de Anthropic: ¿Qué significa para la IA?',
+                            '<p><strong>La administración de Donald Trump ha dado un giro inesperado en su postura sobre la inteligencia artificial.</strong></p>' +
+                            '<p>Tras meses de tensiones con empresas tecnológicas como Anthropic, el gobierno estadounidense ha decidido <strong>levantar el bloqueo</strong> que pesaba sobre el modelo de lenguaje Claude y su nueva versión, Mythos 5. Esta decisión llega en un momento crítico, donde la competencia en el sector de la IA se ha intensificado con el lanzamiento de nuevos modelos por parte de empresas como Mistral AI, Google y Meta.</p>' +
+                            '<p><strong>¿Por qué este cambio de postura?</strong></p>' +
+                            '<p>Según fuentes cercanas a la Casa Blanca, la decisión responde a la necesidad de <strong>no quedarse atrás en la carrera tecnológica</strong>. \"No podemos permitir que regulaciones demasiado estrictas ahoguen la innovación en un sector donde Estados Unidos ha sido siempre líder\", declaró un portavoz de la administración.</p>' +
+                            '<p>El modelo Claude de Anthropic, especialmente su versión Mythos 5, ha sido objeto de controversia debido a su capacidad para generar texto indistinguible del humano, lo que ha generado preocupaciones sobre su uso en desinformación y manipulación. Sin embargo, la empresa ha trabajado estrechamente con el gobierno para implementar <strong>medidas de seguridad robustas</strong>, incluyendo filtros de contenido y auditorías independientes.</p>' +
+                            '<p><strong>Reacciones en el sector</strong></p>' +
+                            '<p>La noticia ha sido recibida con alivio por parte de los desarrolladores y empresas que utilizan herramientas de IA en sus operaciones diarias. \"Es un paso en la dirección correcta\", comentó un ejecutivo de una startup de Silicon Valley. \"La IA es una herramienta poderosa, pero necesitamos regulaciones que equilibren la innovación con la protección de los ciudadanos\".</p>' +
+                            '<p>Mientras tanto, empresas como Mistral AI y Google continúan avanzando en el desarrollo de sus propios modelos, lo que promete una <strong>nueva era de competencia</strong> en el sector de la inteligencia artificial.</p>'
+                        )">
                             Trump aprueba el uso de Claude de Anthropic: ¿Qué significa para la IA?
                         </h3>
                         <p>El presidente Trump ha autorizado el uso de Claude en proyectos gubernamentales. Analizamos las implicaciones políticas y tecnológicas de esta decisión histórica.</p>
@@ -612,7 +636,18 @@
                             <span>Ayer</span>
                             <span>· 6 min de lectura</span>
                         </div>
-                        <h3 class="noticia-titulo" onclick="abrirModal('Mistral AI lanza su nuevo modelo 3.5: más rápido y preciso que nunca', 'El nuevo modelo de Mistral supera a sus competidores en velocidad y precisión. Te contamos todas las novedades y cómo afectan a los desarrolladores. Con un 20% menos de consumo de energía y capacidad para procesar textos más largos, este modelo promete revolucionar el mercado de la IA en Europa.')">
+                        <h3 class="noticia-titulo" onclick="abrirModal(
+                            'Mistral AI lanza su nuevo modelo 3.5: más rápido y preciso que nunca',
+                            '<p><strong>Mistral AI ha dado un paso gigante en el mundo de la inteligencia artificial</strong> con el lanzamiento de su nuevo modelo 3.5, que promete revolucionar la forma en que interactuamos con las máquinas.</p>' +
+                            '<p>Este nuevo modelo no solo es <strong>un 20% más rápido</strong> que su predecesor, sino que también ofrece una precisión sin precedentes en tareas complejas como la generación de código, la traducción automática y el análisis de datos masivos. Lo más impresionante es su capacidad para <strong>procesar y entender textos de hasta 128.000 tokens</strong>, lo que equivale a aproximadamente 100.000 palabras, superando a la mayoría de los modelos actuales.</p>' +
+                            '<p><strong>¿Qué lo hace diferente?</strong></p>' +
+                            '<p>Una de las mayores innovaciones de Mistral AI 3.5 es su <strong>eficiencia energética</strong>. Según la empresa, este modelo consume un 30% menos de energía que los modelos anteriores, lo que lo hace más accesible para empresas de todos los tamaños. Además, su arquitectura optimizada permite que funcione en <strong>dispositivos con menos recursos</strong>, abriendo la puerta a nuevas aplicaciones en móviles y dispositivos IoT.</p>' +
+                            '<p><strong>Impacto en el mercado</strong></p>' +
+                            '<p>El lanzamiento de Mistral AI 3.5 llega en un momento en que la competencia en el sector de la IA es más feroz que nunca. Con gigantes como Google, Meta y OpenAI compitiendo por el dominio del mercado, Mistral AI ha logrado posicionarse como una alternativa seria, especialmente en Europa, donde su enfoque en la <strong>privacidad y el cumplimiento normativo</strong> ha sido muy bien recibido.</p>' +
+                            '<p>Los primeros usuarios que han tenido acceso al modelo han destacado su capacidad para <strong>generar respuestas más coherentes y contextualizadas</strong>, incluso en conversaciones largas y complejas. \"Es como hablar con un experto en el tema\", comentó un desarrollador que probó el modelo en su fase beta.</p>' +
+                            '<p><strong>¿Qué sigue?</strong></p>' +
+                            '<p>Mistral AI ya ha anunciado que está trabajando en la siguiente versión, que incluirá mejoras en la comprensión multimodal, permitiendo no solo procesar texto, sino también imágenes y audio. Esto podría abrir nuevas posibilidades en campos como el diagnóstico médico, el análisis de videos y la creación de contenido multimedia.</p>'
+                        )">
                             Mistral AI lanza su nuevo modelo 3.5: más rápido y preciso que nunca
                         </h3>
                         <p>El nuevo modelo de Mistral supera a sus competidores en velocidad y precisión. Te contamos todas las novedades y cómo afectan a los desarrolladores.</p>
@@ -697,7 +732,7 @@
         // Función para abrir el modal con el contenido de la noticia
         function abrirModal(titulo, contenido) {
             document.getElementById('modal-titulo').textContent = titulo;
-            document.getElementById('modal-contenido').innerHTML = `<p>${contenido}</p>`;
+            document.getElementById('modal-contenido').innerHTML = contenido;
             document.getElementById('modal-noticia').style.display = 'block';
         }
 
